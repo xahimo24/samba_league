@@ -1,33 +1,34 @@
 <?php
-    session_start();
-    if (! isset($_SESSION['user_id'])) {
-        header("Location: index.php");
-        exit();
-    }
-    include 'db_connection.php';
+session_start();
+if (! isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+    exit();
+}
+include 'db_connection.php';
 
-    // Obtener la información de los jugadores
-    $sql       = "SELECT * FROM jugadores";
-    $result    = $conn->query($sql);
-    $jugadores = [];
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $jugadores[] = $row;
-        }
+// Obtener la información de los jugadores
+$sql       = "SELECT * FROM jugadores";
+$result    = $conn->query($sql);
+$jugadores = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $jugadores[] = $row;
     }
+}
 
-    // Obtener la información de los partidos
-    $sql       = "SELECT * FROM partidos";
-    $result    = $conn->query($sql);
-    $partidos = [];
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $partidos[] = $row;
-        }
+// Obtener la información de los partidos
+$sql       = "SELECT * FROM partidos";
+$result    = $conn->query($sql);
+$partidos = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $partidos[] = $row;
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,11 +42,14 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav class="container">
             <div class="header-logo">
-                <a href="index.php"><h1>SAMBA LEAGUE</h1></a>
+                <a href="index.php">
+                    <h1>SAMBA LEAGUE</h1>
+                </a>
             </div>
             <ul>
                 <li><a href="#partidos">PARTIDOS</a></li>
@@ -157,6 +161,7 @@
                         <input type="number" id="edit_resultado_local" name="resultado_local" required>
                         <label for="edit_resultado_visitante">Resultado Visitante:</label>
                         <input type="number" id="edit_resultado_visitante" name="resultado_visitante" required>
+
                         <label for="edit_team_color">Color del Equipo:</label>
                         <select id="edit_team_color" name="team_color">
                             <option value="">Selecciona Color</option>
@@ -165,13 +170,13 @@
                             <option value="samba">Equipacion Samba</option>
                             <option value="rojo">Rojo</option>
                         </select>
-                        <label for="edit_team_player">Jugador del Equipo:</label>
-                        <select id="edit_team_player" name="team_player">
-                            <option value="">Seleccionar Jugador</option>
-                            <?php foreach ($jugadores as $jugador): ?>
-                                <option value="<?php echo $jugador['id']; ?>"><?php echo $jugador['nombre']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        
+                        <!-- Listar todos los jugadores en forma de lista -->
+                        <label id="edit_team_player" name="team_player">
+                        <?php foreach ($jugadores as $jugador): ?>
+                            <input value="<?php echo $jugador['id']; ?>"><?php echo $jugador['nombre']; ?></input>
+                        <?php endforeach; ?>
+
                         <button type="button" onclick="addEditTeamPlayer()">Añadir Jugador</button>
                         <ul id="edit_team_players_list"></ul>
                         <label for="edit_event_minute">Minuto del Evento:</label>
@@ -201,7 +206,7 @@
         </div>
     </section>
     <section class="jugadores" id="jugadores">
-    <div class="container">
+        <div class="container">
             <h2>Jugadores</h2>
             <button onclick="openCreatePlayerModal()">Crear Jugador</button>
             <table>
@@ -330,149 +335,166 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="media/js/conf.js"></script>
     <script>
-    const jugadores = <?php echo json_encode($jugadores); ?>;
-    const partidos = <?php echo json_encode($partidos); ?>;
-    let teamPlayers = [];
-    let events = [];
-    let editTeamPlayers = [];
-    let editEvents = [];
+        const jugadores = <?php echo json_encode($jugadores); ?>;
+        const partidos = <?php echo json_encode($partidos); ?>;
+        let teamPlayers = [];
+        let events = [];
+        let editTeamPlayers = [];
+        let editEvents = [];
 
-    function openCreateMatchModal() {
-        document.getElementById('createMatchModal').style.display = 'block';
-    }
-
-    function closeCreateMatchModal() {
-        document.getElementById('createMatchModal').style.display = 'none';
-        clearTemporaryData();
-        resetForm();
-    }
-
-    function openEditMatchModal() {
-        document.getElementById('editMatchModal').style.display = 'block';
-    }
-
-    function closeEditMatchModal() {
-        document.getElementById('editMatchModal').style.display = 'none';
-        clearEditTemporaryData();
-        resetEditForm();
-    }
-
-    function addTeamPlayer() {
-        const color = document.getElementById('team_color').value;
-        const player = document.getElementById('team_player').value;
-        if (player) {
-            teamPlayers.push({ color, player });
-            updateTeamPlayersList();
+        function openCreateMatchModal() {
+            document.getElementById('createMatchModal').style.display = 'block';
         }
-    }
 
-    function updateTeamPlayersList() {
-        const list = document.getElementById('team_players_list');
-        list.innerHTML = '';
-        teamPlayers.forEach((tp, index) => {
-            const li = document.createElement('li');
-            li.textContent = `${tp.color}: ${tp.player}`;
-            list.appendChild(li);
-        });
-    }
-
-    function addEvent() {
-        const minute = document.getElementById('event_minute').value;
-        const type = document.getElementById('event_type').value;
-        const playerMain = document.getElementById('event_player_main').value;
-        const playerSecondary = document.getElementById('event_player_secondary').value;
-        if (playerMain) {
-            events.push({ minute, type, playerMain, playerSecondary });
-            updateEventsList();
+        function closeCreateMatchModal() {
+            document.getElementById('createMatchModal').style.display = 'none';
+            clearTemporaryData();
+            resetForm();
         }
-    }
 
-    function updateEventsList() {
-        const list = document.getElementById('events_list');
-        list.innerHTML = '';
-        events.forEach((event, index) => {
-            const li = document.createElement('li');
-            li.textContent = `Minuto ${event.minute}: ${event.type} - ${event.playerMain} ${event.playerSecondary ? '(Asistencia de ' + event.playerSecondary + ')' : ''}`;
-            list.appendChild(li);
-        });
-    }
-
-    function clearTemporaryData() {
-        teamPlayers = [];
-        events = [];
-        updateTeamPlayersList();
-        updateEventsList();
-    }
-
-    function resetForm() {
-        document.getElementById('createMatchForm').reset();
-    }
-
-    function addEditTeamPlayer() {
-        const color = document.getElementById('edit_team_color').value;
-        const player = document.getElementById('edit_team_player').value;
-        if (player) {
-            editTeamPlayers.push({ color, player });
-            updateEditTeamPlayersList();
+        function openEditMatchModal() {
+            document.getElementById('editMatchModal').style.display = 'block';
         }
-    }
 
-    function updateEditTeamPlayersList() {
-        const list = document.getElementById('edit_team_players_list');
-        list.innerHTML = '';
-        editTeamPlayers.forEach((tp, index) => {
-            const li = document.createElement('li');
-            li.textContent = `${tp.color}: ${tp.player}`;
-            list.appendChild(li);
-        });
-    }
-
-    function addEditEvent() {
-        const minute = document.getElementById('edit_event_minute').value;
-        const type = document.getElementById('edit_event_type').value;
-        const playerMain = document.getElementById('edit_event_player_main').value;
-        const playerSecondary = document.getElementById('edit_event_player_secondary').value;
-        if (playerMain) {
-            editEvents.push({ minute, type, playerMain, playerSecondary });
-            updateEditEventsList();
+        function closeEditMatchModal() {
+            document.getElementById('editMatchModal').style.display = 'none';
+            clearEditTemporaryData();
+            resetEditForm();
         }
-    }
 
-    function updateEditEventsList() {
-        const list = document.getElementById('edit_events_list');
-        list.innerHTML = '';
-        editEvents.forEach((event, index) => {
-            const li = document.createElement('li');
-            li.textContent = `Minuto ${event.minute}: ${event.type} - ${event.playerMain} ${event.playerSecondary ? '(Asistencia de ' + event.playerSecondary + ')' : ''}`;
-            list.appendChild(li);
-        });
-    }
-
-    function clearEditTemporaryData() {
-        editTeamPlayers = [];
-        editEvents = [];
-        updateEditTeamPlayersList();
-        updateEditEventsList();
-    }
-
-    function resetEditForm() {
-        document.getElementById('editMatchForm').reset();
-    }
-
-    function loadMatchData() {
-        const partidoId = document.getElementById('select_jornada').value;
-        if (partidoId) {
-            const partido = partidos.find(p => p.id == partidoId);
-            if (partido) {
-                document.getElementById('edit_partido_id').value = partido.id;
-                document.getElementById('edit_fecha').value = partido.fecha;
-                document.getElementById('edit_jornada').value = partido.jornada;
-                document.getElementById('edit_resultado_local').value = partido.resultado_local;
-                document.getElementById('edit_resultado_visitante').value = partido.resultado_visitante;
-                // Populate other fields as needed
+        function addTeamPlayer() {
+            const color = document.getElementById('team_color').value;
+            const player = document.getElementById('team_player').value;
+            if (player) {
+                teamPlayers.push({
+                    color,
+                    player
+                });
+                updateTeamPlayersList();
             }
         }
-    }
-</script>
+
+        function updateTeamPlayersList() {
+            const list = document.getElementById('team_players_list');
+            list.innerHTML = '';
+            teamPlayers.forEach((tp, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${tp.color}: ${tp.player}`;
+                list.appendChild(li);
+            });
+        }
+
+        function addEvent() {
+            const minute = document.getElementById('event_minute').value;
+            const type = document.getElementById('event_type').value;
+            const playerMain = document.getElementById('event_player_main').value;
+            const playerSecondary = document.getElementById('event_player_secondary').value;
+            if (playerMain) {
+                events.push({
+                    minute,
+                    type,
+                    playerMain,
+                    playerSecondary
+                });
+                updateEventsList();
+            }
+        }
+
+        function updateEventsList() {
+            const list = document.getElementById('events_list');
+            list.innerHTML = '';
+            events.forEach((event, index) => {
+                const li = document.createElement('li');
+                li.textContent = `Minuto ${event.minute}: ${event.type} - ${event.playerMain} ${event.playerSecondary ? '(Asistencia de ' + event.playerSecondary + ')' : ''}`;
+                list.appendChild(li);
+            });
+        }
+
+        function clearTemporaryData() {
+            teamPlayers = [];
+            events = [];
+            updateTeamPlayersList();
+            updateEventsList();
+        }
+
+        function resetForm() {
+            document.getElementById('createMatchForm').reset();
+        }
+
+        function addEditTeamPlayer() {
+            const color = document.getElementById('edit_team_color').value;
+            const player = document.getElementById('edit_team_player').value;
+            if (player) {
+                editTeamPlayers.push({
+                    color,
+                    player
+                });
+                updateEditTeamPlayersList();
+            }
+        }
+
+        function updateEditTeamPlayersList() {
+            const list = document.getElementById('edit_team_players_list');
+            list.innerHTML = '';
+            editTeamPlayers.forEach((tp, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${tp.color}: ${tp.player}`;
+                list.appendChild(li);
+            });
+        }
+
+        function addEditEvent() {
+            const minute = document.getElementById('edit_event_minute').value;
+            const type = document.getElementById('edit_event_type').value;
+            const playerMain = document.getElementById('edit_event_player_main').value;
+            const playerSecondary = document.getElementById('edit_event_player_secondary').value;
+            if (playerMain) {
+                editEvents.push({
+                    minute,
+                    type,
+                    playerMain,
+                    playerSecondary
+                });
+                updateEditEventsList();
+            }
+        }
+
+        function updateEditEventsList() {
+            const list = document.getElementById('edit_events_list');
+            list.innerHTML = '';
+            editEvents.forEach((event, index) => {
+                const li = document.createElement('li');
+                li.textContent = `Minuto ${event.minute}: ${event.type} - ${event.playerMain} ${event.playerSecondary ? '(Asistencia de ' + event.playerSecondary + ')' : ''}`;
+                list.appendChild(li);
+            });
+        }
+
+        function clearEditTemporaryData() {
+            editTeamPlayers = [];
+            editEvents = [];
+            updateEditTeamPlayersList();
+            updateEditEventsList();
+        }
+
+        function resetEditForm() {
+            document.getElementById('editMatchForm').reset();
+        }
+
+        function loadMatchData() {
+            const partidoId = document.getElementById('select_jornada').value;
+            if (partidoId) {
+                const partido = partidos.find(p => p.id == partidoId);
+                if (partido) {
+                    document.getElementById('edit_partido_id').value = partido.id;
+                    document.getElementById('edit_fecha').value = partido.fecha;
+                    document.getElementById('edit_jornada').value = partido.jornada;
+                    document.getElementById('edit_resultado_local').value = partido.resultado_local;
+                    document.getElementById('edit_resultado_visitante').value = partido.resultado_visitante;
+                    // Populate other fields as needed
+                }
+            }
+        }
+    </script>
 </body>
+
 </html>

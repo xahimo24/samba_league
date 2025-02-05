@@ -170,9 +170,9 @@ if ($result->num_rows > 0) {
                             <option value="samba">Equipacion Samba</option>
                             <option value="rojo">Rojo</option>
                         </select>
-                        
+
                         <!-- Listar todos los jugadores en forma de lista -->
-                        <label id="edit_team_player" name="team_player">
+                        <label id="edit_team_player" name="team_player">Jugadores del Equipo:</label>
                         <?php foreach ($jugadores as $jugador): ?>
                             <input value="<?php echo $jugador['id']; ?>"><?php echo $jugador['nombre']; ?></input>
                         <?php endforeach; ?>

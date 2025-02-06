@@ -88,7 +88,35 @@
                     disfrutar al máximo del fútbol y de la amistad.<br></br>
                     ¡Únete a la samba, siente el ritmo y vive la pasión por el fútbol con nosotros!
                 </p>
+            <button class="rules">Reglas</button>
             </div>
+<div id="rulesModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Puntos</h2>
+        <p>Goles +2</p>
+        <p>Asistencias +1</p>
+        <p>Paradas +2</p>
+        <p>Partido Ganado +3</p>
+        <p>3 Mejores Defensas +2</p>
+        <p>Gol en Propia Puerta -1</p>
+        <h2>Overall</h2>
+        <p>50% Puntos</p>
+        <p>15% Valoracion Personal</p>
+        <p>35% Valoracion de tus Compañeros</p>
+        <h2>Observaciones</h2>
+        <ul>
+            <li>Si no se hace la VP tanto la VP como la VC serán un 0</li>
+            <li>Hay 24h para contestar a las votaciones</li>
+            <li>No hay tarjetas amarillas ni rojas</li>
+            <li>Los partidos hasta que no eres parte de la samba no cuentan las estadíticas</li>
+            <li>En el caso de que las VP sean muy elevadas y poco comprensibles se hará un cambio de ponderaciones</li>
+            <li>Pueden haber jornadas especiales donde las STATS cuenten diferente</li>
+            <li>En el caso de que haya boicot a la organización se asignará un OVERALL de -1</li>
+        </ul>
+    </div>
+</div>
+
             <div class="aboutus-image">
                 <img src="media/img/aboutus-img.jpg" alt="aboutus">
             </div>
@@ -98,39 +126,82 @@
 <section id="players" class="players-section">
     <h2>Jugadores</h2>
     <div class="jugadores">
-        <?php foreach ($jugadores as $jugador): ?>
-<?php if ($jugador['ritmo'] !== null && $jugador['disparo'] !== null && $jugador['pase'] !== null && $jugador['regate'] !== null && $jugador['defensa'] !== null && $jugador['fisico'] !== null): ?>
-                <div class="jugador" onclick="flipCard(this)">
-                    <div class="jugador-inner">
-                        <div class="jugador-front">
-                            <img src="media/img/<?php echo strtolower($jugador['nombre']); ?>-foto.jpg" alt="<?php echo $jugador['nombre']; ?>" onerror="this.onerror=null;this.src='media/img/nofoto.png';">
-                        </div>
-                        <div class="jugador-back">
-                            <p>Estadísticas de                                                                                               <?php echo $jugador['nombre']; ?></p>
-                            <ul>
-                                <li>Partidos Jugados:                                                                                                           <?php echo $jugador['partidos_jugados']; ?></li>
-                                <li>Partidos Ganados:                                                                                                           <?php echo $jugador['partidos_ganados']; ?></li>
-                                <li>Partidos Perdidos:                                                                                                             <?php echo $jugador['partidos_perdidos']; ?></li>
-                                <li>Goles:                                                                                     <?php echo $jugador['goles']; ?></li>
-                                <li>Asistencias:                                                                                                 <?php echo $jugador['asistencias']; ?></li>
-                                <li>Paradas:                                                                                         <?php echo $jugador['paradas']; ?></li>
-                                <li>Stats Defensivas:                                                                                                           <?php echo $jugador['stats_defensivas']; ?></li>
-                                <li>Win Rate:                                                                                           <?php echo $jugador['win_rate']; ?></li>
-                                <li>Suma de Puntos:                                                                                                       <?php echo $jugador['suma_puntos']; ?></li>
-                                <li>Overall:                                                                                         <?php echo $jugador['overall']; ?></li>
-                            </ul>
-                        </div>
-                        <div class="jugador-back-2">
-                            <p>Estadísticas físicas de <?php echo $jugador['nombre']; ?></p>
-                            <div class="chart-container">
-                                <canvas id="radarChart"></canvas>
-                            </div>      
-                        </div>      
+    <?php foreach ($jugadores as $index => $jugador): ?>
+        <?php if ($jugador['ritmo'] !== null && $jugador['disparo'] !== null && $jugador['pase'] !== null && $jugador['regate'] !== null && $jugador['defensa'] !== null && $jugador['fisico'] !== null): ?>
+            <div class="jugador" onclick="flipCard(this)">
+                <div class="jugador-inner">
+                    <div class="jugador-front">
+                        <img src="media/img/<?php echo strtolower($jugador['nombre']); ?>-foto.jpg" alt="<?php echo $jugador['nombre']; ?>" 
+                             onerror="this.onerror=null;this.src='media/img/nofoto.png';">
                     </div>
+                    <div class="jugador-back">
+                        <p>Estadísticas de <?php echo $jugador['nombre']; ?></p>
+                        <ul>
+                            <li>Partidos Jugados: <?php echo $jugador['partidos_jugados']; ?></li>
+                            <li>Partidos Ganados: <?php echo $jugador['partidos_ganados']; ?></li>
+                            <li>Partidos Perdidos: <?php echo $jugador['partidos_perdidos']; ?></li>
+                            <li>Goles: <?php echo $jugador['goles']; ?></li>
+                            <li>Asistencias: <?php echo $jugador['asistencias']; ?></li>
+                            <li>Paradas: <?php echo $jugador['paradas']; ?></li>
+                            <li>Stats Defensivas: <?php echo $jugador['stats_defensivas']; ?></li>
+                            <li>Win Rate: <?php echo $jugador['win_rate']; ?></li>
+                            <li>Suma de Puntos: <?php echo $jugador['suma_puntos']; ?></li>
+                            <li>Overall: <?php echo $jugador['overall']; ?></li>
+                        </ul>
+                    </div>
+                    <div class="jugador-back-2">
+                        <p>Estadísticas físicas de <?php echo $jugador['nombre']; ?></p>
+                        <div class="chart-container">
+                            <canvas id="radarChart-<?php echo $index; ?>"></canvas>
+                        </div>      
+                    </div>      
                 </div>
-            <?php endif; ?>
-<?php endforeach; ?>
-    </div>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const ctx = document.getElementById('radarChart-<?php echo $index; ?>').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: ['Ritmo', 'Disparo', 'Pase', 'Regate', 'Defensa', 'Físico'],
+                            datasets: [{
+                                data: [
+                                    <?php echo $jugador['ritmo']; ?>, 
+                                    <?php echo $jugador['disparo']; ?>, 
+                                    <?php echo $jugador['pase']; ?>, 
+                                    <?php echo $jugador['regate']; ?>, 
+                                    <?php echo $jugador['defensa']; ?>, 
+                                    <?php echo $jugador['fisico']; ?>
+                                ],
+                                backgroundColor: 'rgba(95, 192, 16, 0.3)',
+                                borderColor: 'black',
+                                pointBackgroundColor: '#82BC6A',
+                                pointBorderColor: 'black',
+                                pointRadius: 5
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                r: {
+                                    angleLines: { color: 'black' },
+                                    grid: { color: 'black' },
+                                    pointLabels: { color: 'black', font: { size: 14 } },
+                                    suggestedMin: 0,
+                                    suggestedMax: 100,
+                                    ticks: { display: false }
+                                }
+                            },
+                            plugins: {
+                                legend: { display: false }
+                            }
+                        }
+                    });
+                });
+            </script>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</div>
 </section>
 <section id="partidos" class="match-section">
     <h2>Partidos</h2>
@@ -302,46 +373,6 @@
 
     </div>
 </footer>
-<script>
-    const ritmo = <?php echo json_encode($jugador['ritmo']); ?>
-    const disparo = <?php echo json_encode($jugador['disparo']); ?>
-    const pase = <?php echo json_encode($jugador['pase']); ?>
-    const regate = <?php echo json_encode($jugador['regate']); ?>
-    const defensa = <?php echo json_encode($jugador['defensa']); ?>
-    const fisico = <?php echo json_encode($jugador['fisico']); ?>
-    const ctx = document.getElementById('radarChart').getContext('2d');
-    const radarChart = new Chart(ctx, {
-        type: 'radar',
-        labels: ['Ritmo', 'Disparo', 'Pase', 'Regate', 'Defensa', 'Físico'],
-        data: [{
-            label: 'Estadísticas',
-            datasets: [{
-                data: [ritmo, disparo, pase, regate, defensa, fisico],
-                backgroundColor: 'rgba(200, 200, 200, 0.3)',
-            borderColor: 'white',
-            pointBackgroundColor: 'blue',
-            pointBorderColor: 'white',
-            pointRadius: 5
-            }]
-        }],
-        options: {
-            scales: {
-                r: {
-                    angleLines: { color: 'white' },
-                    grid: { color: 'white' },
-                    pointLabels: { color: 'white', font: { size: 14 } },
-                    suggestedMin: 0,
-                    suggestedMax: 100,
-                    ticks: { display: false }
-                }
-            },
-            plugins: {
-                legend: { display: false }
-            }
-        }]
-    };
-);
-</script>
 </body>
 
 </html>

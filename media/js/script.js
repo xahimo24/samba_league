@@ -30,42 +30,60 @@ window.addEventListener("load", () => {
   });
   
   
-  // Función para inicializar el modal de login
-  function initializeLoginModal() {
-    // Obtenemos el modal, el botón de login, y el botón de cerrar
-    var modal = document.getElementById("loginModal");
-    var loginBtn = document.querySelector(".header-btn");
-    var closeBtn = document.querySelector(".modal .close");
-  
-    // Función que muestra el modal estableciendo su estilo "display" en "block"
-    function showModal() {
+// Función para inicializar el modal de login
+function initializeLoginModal() {
+  var modal = document.getElementById("loginModal");
+  var loginBtn = document.querySelector(".header-btn");
+  var closeBtn = modal.querySelector(".close"); // Se obtiene el botón de cerrar solo dentro del modal
+
+  function showModal() {
       modal.style.display = "block";
-    }
-  
-    // Función que oculta el modal cambiando su estilo "display" a "none"
-    function closeModal() {
-      modal.style.display = "none";
-    }
-  
-    // Añadimos un evento para cuando el usuario haga clic en el botón de login
-    loginBtn.addEventListener("click", showModal);
-  
-    // Añadimos un evento para cuando el usuario haga clic en el botón de cerrar ("X")
-    closeBtn.addEventListener("click", closeModal);
-  
-    // Añadimos un evento al objeto window para detectar clics en cualquier parte de la ventana
-    window.addEventListener("click", function (event) {
-      // Si el usuario hace clic fuera del modal (en el fondo del modal), también se cierra el modal
-      if (event.target == modal) {
-        closeModal();
-      }
-    });
   }
-  
-  // Escuchamos el evento 'DOMContentLoaded', que ocurre cuando todo el DOM se ha cargado completamente
-  document.addEventListener("DOMContentLoaded", function () {
-    initializeLoginModal();
+
+  function closeModal() {
+      modal.style.display = "none";
+  }
+
+  loginBtn.addEventListener("click", showModal);
+  closeBtn.addEventListener("click", closeModal);
+
+  window.addEventListener("click", function (event) {
+      if (event.target == modal) {
+          closeModal();
+      }
   });
+}
+
+// Función para inicializar el modal de reglas
+function initializeRulesModal() {
+  var modal = document.getElementById("rulesModal");
+  var rulesBtn = document.querySelector(".rules"); // Corregido el selector
+  var closeBtn = modal.querySelector(".close"); // Se obtiene el botón de cerrar dentro del modal
+
+  function showModal() {
+      modal.style.display = "block";
+  }
+
+  function closeModal() {
+      modal.style.display = "none";
+  }
+
+  rulesBtn.addEventListener("click", showModal);
+  closeBtn.addEventListener("click", closeModal);
+
+  window.addEventListener("click", function (event) {
+      if (event.target == modal) {
+          closeModal();
+      }
+  });
+}
+
+// Inicialización cuando el DOM esté cargado
+document.addEventListener("DOMContentLoaded", function () {
+  initializeLoginModal();
+  initializeRulesModal(); // Se corrige el nombre de la función
+});
+
 
   document.addEventListener('DOMContentLoaded', function() {
     const matchItems = document.querySelectorAll('.match-item');

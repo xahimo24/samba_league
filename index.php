@@ -121,11 +121,11 @@
                             </ul>
                         </div>
                         <div class="jugador-back-2">
-                            <p>Estadísticas físicas de                                                                                                                 <?php echo $jugador['nombre']; ?></p>
+                            <p>Estadísticas físicas de <?php echo $jugador['nombre']; ?></p>
                             <div class="chart-container">
-                            <canvas id="radarChart-<?php echo strtolower($jugador['nombre']); ?>"></canvas>
-                            </div>
-                        </div>
+                                <canvas id="radarChart"></canvas>
+                            </div>      
+                        </div>      
                     </div>
                 </div>
             <?php endif; ?>
@@ -141,7 +141,6 @@
                     foreach ($partidos as $partidoId => $partidoData) {
                         $homeTeam = $partidoData[0];
                         $awayTeam = $partidoData[1];
-
                         echo "
     <div class='match-item'>
   <div class='match-teams'>
@@ -304,46 +303,44 @@
     </div>
 </footer>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    var ctx = document.getElementById('radarChart-<?php echo strtolower($jugador['nombre']); ?>').getContext('2d');
-    var data = {
+    const ritmo = <?php echo json_encode($jugador['ritmo']); ?>
+    const disparo = <?php echo json_encode($jugador['disparo']); ?>
+    const pase = <?php echo json_encode($jugador['pase']); ?>
+    const regate = <?php echo json_encode($jugador['regate']); ?>
+    const defensa = <?php echo json_encode($jugador['defensa']); ?>
+    const fisico = <?php echo json_encode($jugador['fisico']); ?>
+    const ctx = document.getElementById('radarChart').getContext('2d');
+    const radarChart = new Chart(ctx, {
+        type: 'radar',
         labels: ['Ritmo', 'Disparo', 'Pase', 'Regate', 'Defensa', 'Físico'],
-        datasets: [{
+        data: [{
             label: 'Estadísticas',
-            data: [
-                <?php echo $jugador['ritmo']; ?>,
-                <?php echo $jugador['disparo']; ?>,
-                <?php echo $jugador['pase']; ?>,
-                <?php echo $jugador['regate']; ?>,
-                <?php echo $jugador['defensa']; ?>,
-                <?php echo $jugador['fisico']; ?>
-            ],
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
+            datasets: [{
+                data: [ritmo, disparo, pase, regate, defensa, fisico],
+                backgroundColor: 'rgba(200, 200, 200, 0.3)',
+            borderColor: 'white',
+            pointBackgroundColor: 'blue',
+            pointBorderColor: 'white',
+            pointRadius: 5
+            }]
+        }],
+        options: {
+            scales: {
+                r: {
+                    angleLines: { color: 'white' },
+                    grid: { color: 'white' },
+                    pointLabels: { color: 'white', font: { size: 14 } },
+                    suggestedMin: 0,
+                    suggestedMax: 100,
+                    ticks: { display: false }
+                }
+            },
+            plugins: {
+                legend: { display: false }
+            }
         }]
     };
-
-    var options = {
-        scale: {
-            ticks: { beginAtZero: true, max: 100, stepSize: 20, display: false },
-            r: {
-                angleLines: { display: false },
-                pointLabels: { font: { size: 12 } },
-                grid: { color: 'rgba(0, 0, 0, 0.1)' }
-            }
-        },
-        plugins: {
-            legend: { display: false }
-        }
-    };
-
-    new Chart(ctx, {
-        type: 'radar',
-        data: data,
-        options: options
-    });
-});
+);
 </script>
 </body>
 

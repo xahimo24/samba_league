@@ -12,6 +12,9 @@
     <link rel="icon" type="image/x-icon" href="media/img/logo_sambaleague.ico">
     <link rel="stylesheet" href="media/css/style.css">
     <title>Samba League</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="media/js/script.js"></script>
     <style>
         @font-face {
             font-family: 'Samba';
@@ -96,27 +99,37 @@
     <h2>Jugadores</h2>
     <div class="jugadores">
         <?php foreach ($jugadores as $jugador): ?>
-            <?php if ($jugador['ritmo'] !== null && $jugador['disparo'] !== null && $jugador['pase'] !== null && $jugador['regate'] !== null && $jugador['defensa'] !== null && $jugador['fisico'] !== null): ?>
+<?php if ($jugador['ritmo'] !== null && $jugador['disparo'] !== null && $jugador['pase'] !== null && $jugador['regate'] !== null && $jugador['defensa'] !== null && $jugador['fisico'] !== null): ?>
                 <div class="jugador" onclick="flipCard(this)">
                     <div class="jugador-inner">
                         <div class="jugador-front">
                             <img src="media/img/<?php echo strtolower($jugador['nombre']); ?>-foto.jpg" alt="<?php echo $jugador['nombre']; ?>" onerror="this.onerror=null;this.src='media/img/nofoto.png';">
                         </div>
                         <div class="jugador-back">
-                            <p>Estadísticas de <?php echo $jugador['nombre']; ?></p>
+                            <p>Estadísticas de                                                                                               <?php echo $jugador['nombre']; ?></p>
                             <ul>
-                                <li>Ritmo: <?php echo $jugador['ritmo']; ?></li>
-                                <li>Disparo: <?php echo $jugador['disparo']; ?></li>
-                                <li>Pase: <?php echo $jugador['pase']; ?></li>
-                                <li>Regate:  <?php echo $jugador['regate']; ?></li>
-                                <li>Defensa:  <?php echo $jugador['defensa']; ?></li>
-                                <li>Físico:   <?php echo $jugador['fisico']; ?></li>
+                                <li>Partidos Jugados:                                                                                                           <?php echo $jugador['partidos_jugados']; ?></li>
+                                <li>Partidos Ganados:                                                                                                           <?php echo $jugador['partidos_ganados']; ?></li>
+                                <li>Partidos Perdidos:                                                                                                             <?php echo $jugador['partidos_perdidos']; ?></li>
+                                <li>Goles:                                                                                     <?php echo $jugador['goles']; ?></li>
+                                <li>Asistencias:                                                                                                 <?php echo $jugador['asistencias']; ?></li>
+                                <li>Paradas:                                                                                         <?php echo $jugador['paradas']; ?></li>
+                                <li>Stats Defensivas:                                                                                                           <?php echo $jugador['stats_defensivas']; ?></li>
+                                <li>Win Rate:                                                                                           <?php echo $jugador['win_rate']; ?></li>
+                                <li>Suma de Puntos:                                                                                                       <?php echo $jugador['suma_puntos']; ?></li>
+                                <li>Overall:                                                                                         <?php echo $jugador['overall']; ?></li>
                             </ul>
+                        </div>
+                        <div class="jugador-back-2">
+                            <p>Estadísticas físicas de                                                                                                                 <?php echo $jugador['nombre']; ?></p>
+                            <div class="chart-container">
+                            <canvas id="radarChart-<?php echo strtolower($jugador['nombre']); ?>"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
             <?php endif; ?>
-        <?php endforeach; ?>
+<?php endforeach; ?>
     </div>
 </section>
 <section id="partidos" class="match-section">
@@ -290,7 +303,48 @@
 
     </div>
 </footer>
-<script src="media/js/script.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var ctx = document.getElementById('radarChart-<?php echo strtolower($jugador['nombre']); ?>').getContext('2d');
+    var data = {
+        labels: ['Ritmo', 'Disparo', 'Pase', 'Regate', 'Defensa', 'Físico'],
+        datasets: [{
+            label: 'Estadísticas',
+            data: [
+                <?php echo $jugador['ritmo']; ?>,
+                <?php echo $jugador['disparo']; ?>,
+                <?php echo $jugador['pase']; ?>,
+                <?php echo $jugador['regate']; ?>,
+                <?php echo $jugador['defensa']; ?>,
+                <?php echo $jugador['fisico']; ?>
+            ],
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    var options = {
+        scale: {
+            ticks: { beginAtZero: true, max: 100, stepSize: 20, display: false },
+            r: {
+                angleLines: { display: false },
+                pointLabels: { font: { size: 12 } },
+                grid: { color: 'rgba(0, 0, 0, 0.1)' }
+            }
+        },
+        plugins: {
+            legend: { display: false }
+        }
+    };
+
+    new Chart(ctx, {
+        type: 'radar',
+        data: data,
+        options: options
+    });
+});
+</script>
 </body>
 
 </html>

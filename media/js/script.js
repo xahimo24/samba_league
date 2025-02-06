@@ -29,10 +29,6 @@ window.addEventListener("load", () => {
     });
   });
   
-  // Función para girar las tarjetas de los jugadores
-  function flipCard(element) {
-    element.classList.toggle("is-flipped");
-  }
   
   // Función para inicializar el modal de login
   function initializeLoginModal() {
@@ -83,5 +79,22 @@ window.addEventListener("load", () => {
             });
         });
     });
+
+    document.querySelectorAll('.jugador').forEach(jugador => {
+      jugador.addEventListener('click', () => {
+          if (jugador.classList.contains('is-flipped')) {
+              if (jugador.querySelector('.jugador-back').style.display === 'block') {
+                  jugador.querySelector('.jugador-back').style.display = 'none';
+                  jugador.querySelector('.jugador-back-2').style.display = 'block';
+              } else {
+                  jugador.classList.remove('is-flipped');
+                  jugador.querySelector('.jugador-back-2').style.display = 'none';
+              }
+          } else {
+              jugador.classList.add('is-flipped');
+              jugador.querySelector('.jugador-back').style.display = 'block';
+          }
+      });
+  });
 });
 

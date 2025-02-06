@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar de Estadísticas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-radial-gauge"></script>
+    <style>
+        body {
+            background-color: #003f87;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .chart-container {
+            width: 400px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="radarChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        const data = {
+            labels: ['SPEED', 'DEFENSE', 'PASS', 'DRIBBLE', 'SHOOT', 'OFFENSE'],
+            datasets: [{
+                label: 'Player Stats',
+                data: [77, 75, 78, 70, 82, 94],
+                backgroundColor: 'rgba(200, 200, 200, 0.3)',
+                borderColor: 'white',
+                pointBackgroundColor: 'blue',
+                pointBorderColor: 'white',
+                pointRadius: 5
+            }]
+        };
+        
+        const options = {
+            scales: {
+                r: {
+                    angleLines: { color: 'white' },
+                    grid: { color: 'white' },
+                    pointLabels: { color: 'white', font: { size: 14 } },
+                    suggestedMin: 0,
+                    suggestedMax: 100,
+                    ticks: { display: false }
+                }
+            },
+            plugins: {
+                legend: { display: false }
+            }
+        };
+
+        new Chart(ctx, {
+            type: 'radar',
+            data: data,
+            options: options
+        });
+    </script>
+</body>
+</html>

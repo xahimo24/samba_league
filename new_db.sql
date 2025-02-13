@@ -308,8 +308,12 @@ CREATE TABLE Eventos (
     id_jugador_principal INT NOT NULL,
     id_jugador_secundario INT,
     FOREIGN KEY (id_partido) REFERENCES Partidos(id),
+<<<<<<< HEAD
     FOREIGN KEY (id_jugador_principal) REFERENCES Jugadores(id),
     FOREIGN KEY (id_jugador_secundario) REFERENCES Jugadores(id)
+=======
+    FOREIGN KEY (id_jugador_principal) REFERENCES Jugadores(id)
+>>>>>>> dae8409d6c4c8bb3bdb6d831ac0fbbc556d66a28
 );
 
 INSERT INTO Eventos (id_partido, minuto, tipo_evento, id_jugador_principal, id_jugador_secundario) VALUES
@@ -545,13 +549,12 @@ INSERT INTO Valoraciones (id_jugador, id_partido, valoracion_personal, valoracio
 (20, 11, 4, 4, 13.0);
 
 CREATE TABLE usuarios (
-    id int(11) NOT NULL,
+    id int(11) NOT NULL AUTO_INCREMENT,
     username varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
     created_at timestamp NOT NULL DEFAULT current_timestamp()
 );
-
 
 INSERT INTO usuarios (id, username, password, email, created_at) VALUES
 (1, 'admin', '$2y$10$NVFhHl83vsLgzOAF7d1bm.PboVGo0tSrChWXS8H/GY2Vu7aw/buja', 'adminsambaleague@gmail.com', '2025-01-27 18:48:25');

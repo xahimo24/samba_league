@@ -16,28 +16,29 @@ CREATE TABLE Jugadores (
 );
 
 INSERT INTO 'Jugadores' ('nombre', 'dorsal', 'posicion', 'ritmo', 'disparo', 'pase', 'regate', 'defensa', 'fisico') VALUES 
-('AITOR', '420', 'CM', 77, 72, 84, 80, 69, 71),
+('AITOR', '420', 'CM', 75, 74, 84, 81, 75, 75),
 ('ALBERTO', NULL, 'GK', NULL, NULL, NULL, NULL, NULL, NULL),
-('ALVARO', '23', 'CB', 74, 69, 77, 66, 86, 85),
-('ANDREU', '32', 'ST', 75, 67, 82, 82, 68, 68),
-('BIEL', '14', 'ST', 77, 82, 68, 5, 12, 74),
-('BRAIS', '10', 'CM', 73, 63, 84, 81, 67, 64),
-('EDU', '37', 'CD', 62, 67, 67, 65, 80, 80),
-('HUGO', '45', 'GK', 66, 74, 73, 64, 66, 67),
-('JAVI', '11', 'ST', 84, 88, 74, 80, 44, 75),
-('JOAN', '3', 'CB', 84, 66, 71, 70, 76, 82),
+('ALVARO', '23', 'CB', 76, 70, 75, 66, 86, 85),
+('ANDREU', '32', 'ST', 75, 75, 81, 82, 65, 65),
+('BIEL', '14', 'ST', 79, 77, 65, 72, 18, 75),
+('BRAIS', '10', 'CM', 70, 63, 82, 81, 67, 65),
+('EDU', '37', 'CD', 60, 69, 77, 63, 82, 80),
+('HUGO', '45', 'GK', 66, 74, 76, 64, 67, 68),
+('JAVI', '11', 'ST', 85, 88, 77, 82, 58, 77),
+('JOAN', '3', 'CB', 86, 73, 72, 74, 78, 84),
 ('PETACA', '17', 'CB', NULL, NULL, NULL, NULL, NULL, NULL),
-('PEDRI', '78', 'CB', 64, 57, 65, 60, 81, 86),
-('JUSI', '6', 'CM', 75, 72, 76, 76, 60, 67),
-('MARCEL', '37', 'CD', 75, 82, 70, 71, 42, 71),
-('MIQUEL', '1', 'CM', 80, 44, 60, 55, 65, 65),
-('NANO', '16', 'CM', 74, 75, 78, 74, 76, 76),
-('OSCAR', '8', 'ST', 75, 79, 70, 73, 64, 80),
-('PERAS', '87', 'CM', 72, 65, 75, 70, 73, 79),
+('PEDRI', '78', 'CB', 67, 62, 65, 60, 82, 84),
+('JUSI', '6', 'CM', 73, 75, 76, 76, 62, 63),
+('MARCEL', '37', 'CD', 77, 84, 72, 72, 34, 74),
+('MIQUEL', '1', 'CM', 77, 48, 60, 55, 66, 65),
+('NANO', '16', 'CM', 74, 79, 76, 77, 66, 76),
+('OSCAR', '8', 'ST', 72, 78, 66, 70, 64, 78),
+('PERAS', '87', 'CM', 74, 74, 81, 79, 69, 75),
 ('VITO', '37', 'ST', NULL, NULL, NULL, NULL, NULL, NULL),
-('XASQUI', '15', 'CB', 64, 66, 70, 64, 83, 84),
-('XAVI', '5', 'CM', 73, 80, 83, 82, 73, 70),
-('COCA', NULL, 'ST', NULL, NULL, NULL, NULL, NULL, NULL);
+('XASQUI', '15', 'CB', 65, 68, 71, 64, 84, 83),
+('XAVI', '5', 'CM', 70, 80, 86, 81, 75, 68),
+('COCA', NULL, 'ST', NULL, NULL, NULL, NULL, NULL, NULL),
+('RIGAU', NULL, 'ST', 79, 79, 78, 78, 18, 77);
 
 CREATE TABLE Estadisticas (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -541,3 +542,15 @@ INSERT INTO `Valoraciones` (`id_jugador`, `id_partido`, `valoracion_personal`, `
 (13, 11, 3, 4, 8.7),
 (16, 11, 5, 4, 16.3),
 (20, 11, 4, 4, 13.0);
+
+CREATE TABLE usuarios (
+    id int(11) NOT NULL,
+    username varchar(255) NOT NULL,
+    password varchar(255) NOT NULL,
+    email varchar(255) NOT NULL
+    created_at timestamp NOT NULL DEFAULT current_timestamp()
+);
+
+
+INSERT INTO 'usuarios' ('id', 'username', 'password', 'email', 'created_at') VALUES
+(1, 'admin', '$2y$10$NVFhHl83vsLgzOAF7d1bm.PboVGo0tSrChWXS8H/GY2Vu7aw/buja', 'adminsambaleague@gmail.com', '2025-01-27 18:48:25');

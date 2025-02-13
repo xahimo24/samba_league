@@ -482,6 +482,42 @@ button[type="submit"]:hover {
     background-color: #fff; /* Cambia este color si quieres personalizarlo */
 }
 
+.incorporate {
+    margin-top: 50px;
+    display: inline-block;
+    color: #FFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border-radius: 47px;
+    background: #7FAC55;
+    -webkit-box-shadow: 3px 3px 0px 0px #3E6D1E;
+    box-shadow: 3px 3px 0px 0px #3E6D1E;
+    height: 40px;
+    padding: 10px 30px;
+    margin: 0 20px;
+    border: 0;
+}
+
+.incorporate:hover{
+    cursor: pointer;
+}
+
+.camiseta a{
+    text-decoration: underline;
+}
+
+.info{
+    font-size: 18px; /* Tamaño de la fuente un poco más grande */
+    color: #000; /* Color del texto */
+    background-color: #f9f9f9; /* Color de fondo más claro */
+    padding: 15px; /* Más espacio interior */
+    border-left: 5px solid #3E6D1E; /* Borde izquierdo color azul */
+    margin-bottom: 15px; /* Espacio inferior */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
 .rules {
     margin-top: 50px;
     display: inline-block;

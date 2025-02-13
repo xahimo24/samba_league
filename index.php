@@ -88,34 +88,50 @@
                     disfrutar al máximo del fútbol y de la amistad.<br></br>
                     ¡Únete a la samba, siente el ritmo y vive la pasión por el fútbol con nosotros!
                 </p>
-            <button class="rules">Reglas</button>
+                <button class="incorporate">Incorporarse</button>
+                <button class="rules">Reglas</button>
             </div>
-<div id="rulesModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Puntos</h2>
-        <p>Goles +2</p>
-        <p>Asistencias +1</p>
-        <p>Paradas +2</p>
-        <p>Partido Ganado +3</p>
-        <p>3 Mejores Defensas +2</p>
-        <p>Gol en Propia Puerta -1</p>
-        <h2>Overall</h2>
-        <p>50% Puntos</p>
-        <p>15% Valoracion Personal</p>
-        <p>35% Valoracion de tus Compañeros</p>
-        <h2>Observaciones</h2>
-        <ul>
-            <li>Si no se hace la VP tanto la VP como la VC serán un 0</li>
-            <li>Hay 24h para contestar a las votaciones</li>
-            <li>No hay tarjetas amarillas ni rojas</li>
-            <li>Los partidos hasta que no eres parte de la samba no cuentan las estadíticas</li>
-            <li>En el caso de que las VP sean muy elevadas y poco comprensibles se hará un cambio de ponderaciones</li>
-            <li>Pueden haber jornadas especiales donde las STATS cuenten diferente</li>
-            <li>En el caso de que haya boicot a la organización se asignará un OVERALL de -1</li>
-        </ul>
-    </div>
-</div>
+            <!-- Ventana emergente (modal) para incorporarse -->
+            <div id="incorporateModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Incorporarse</h2>
+                    <p>Para incorporarse a la liga hay varios factores en juego:</p><br>
+                    <ul>
+                        <li>Ser amigo de uno o varios integrantes de la liga</li>
+                        <li>Asistir minimo a 3 partidos</li>
+                        <li class="camiseta">Comprar la <a href="https://zentral.es/producto/harvest-team-2/" target="blank">camiseta oficial de la liga</a></li>
+                    </ul>
+                    <p class="info">Toda decision sera tomada por el Equipo Directivo de Samba League</p>
+                </div>
+            </div>
+            <!-- Ventana emergente (modal) para reglas -->
+            <div id="rulesModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Puntos</h2>
+                        <p>Goles +2</p>
+                        <p>Asistencias +1</p>
+                        <p>Paradas +2</p>
+                        <p>Partido Ganado +3</p>
+                        <p>3 Mejores Defensas +2</p>
+                        <p>Gol en Propia Puerta -1</p>
+                    <h2>Overall</h2>
+                        <p>50% Puntos</p>
+                        <p>15% VP (Valoracion Personal)</p>
+                        <p>35% VC (Valoracion de tus Compañeros)</p>
+                    <h2>Observaciones</h2>
+                        <ul>
+                            <li>Si no se hace la VP tanto la VP como la VC serán un 0</li>
+                            <li>Hay 24h para contestar a las votaciones</li>
+                            <li>No hay tarjetas amarillas ni rojas</li>
+                            <li>Los partidos hasta que no eres parte de la samba no cuentan las estadíticas</li>
+                            <li>En el caso de que las VP sean muy elevadas y poco comprensibles se hará un cambio de ponderaciones</li>
+                            <li>Pueden haber jornadas especiales donde las STATS cuenten diferente</li>
+                            <li>En el caso de que haya boicot a la organización se asignará un OVERALL de -1</li>
+                        </ul>
+                </div>
+            </div>
 
             <div class="aboutus-image">
                 <img src="media/img/aboutus-img.jpg" alt="aboutus">

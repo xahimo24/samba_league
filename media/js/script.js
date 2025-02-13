@@ -54,6 +54,30 @@ function initializeLoginModal() {
   });
 }
 
+//Funcion para inicializar el modal de incorporaciones
+function initializeIncorporacionesModal() {
+  var modal = document.getElementById("incorporateModal");
+  var incorporacionesBtn = document.querySelector(".incorporate");
+  var closeBtn = modal.querySelector(".close");
+
+  function showModal() {
+      modal.style.display = "block";
+  }
+
+  function closeModal() {
+      modal.style.display = "none";
+  }
+
+  incorporacionesBtn.addEventListener("click", showModal);
+  closeBtn.addEventListener("click", closeModal);
+
+  window.addEventListener("click", function (event) {
+      if (event.target == modal) {
+          closeModal();
+      }
+  });
+}
+
 // Función para inicializar el modal de reglas
 function initializeRulesModal() {
   var modal = document.getElementById("rulesModal");
@@ -82,6 +106,7 @@ function initializeRulesModal() {
 document.addEventListener("DOMContentLoaded", function () {
   initializeLoginModal();
   initializeRulesModal(); // Se corrige el nombre de la función
+  initializeIncorporacionesModal(); // Se agrega la inicialización del modal de incorporaciones
 });
 
 

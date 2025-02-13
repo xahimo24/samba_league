@@ -2,7 +2,7 @@
 
 // Definir la variable $jugadoresPorNombre
 $jugadoresPorNombre = [];
-$sqlJugadores = "SELECT id, nombre, posicion FROM jugadores";
+$sqlJugadores = "SELECT id, nombre, posicion FROM Jugadores";
 $resultJugadores = $conn->query($sqlJugadores);
 if ($resultJugadores->num_rows > 0) {
     while ($jugador = $resultJugadores->fetch_assoc()) {
@@ -15,11 +15,12 @@ if ($resultJugadores->num_rows > 0) {
 }
 
 // Consulta para obtener los partidos
-$sql = "SELECT p.id, p.fecha, p.resultado_local, p.resultado_visitante, et.color, GROUP_CONCAT(j.nombre SEPARATOR ', ') AS jugadores, p.jornada
-        FROM partidos p
-        INNER JOIN equipos_temporales et ON p.id = et.id_partido
-        INNER JOIN jugadores j ON et.id_jugador = j.id
-        GROUP BY p.id, et.color
+$sql = "SELECT p.id, p.fecha, p.goles_local AS resultado_local, p.goles_visitante AS resultado_visitante, e.color, GROUP_CONCAT(j.nombre SEPARATOR ', ') AS jugadores, p.jornada
+        FROM Partidos p
+        INNER JOIN Equipos e ON p.id_equipo_local = e.id OR p.id_equipo_visitante = e.id
+        INNER JOIN Plantilla pl ON e.id = pl.id_equipo
+        INNER JOIN Jugadores j ON pl.id_jugador = j.id
+        GROUP BY p.id, e.color
         ORDER BY p.fecha DESC";
 
 $result = $conn->query($sql);

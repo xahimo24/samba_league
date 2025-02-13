@@ -123,7 +123,7 @@ INSERT INTO Plantilla (id_equipo, id_jugador) VALUES
 (1, 8),
 (1, 10),
 (1, 20),
-(1, 17)
+(1, 17),
 (2, 3),
 (2, 6),
 (2, 9),
@@ -287,18 +287,18 @@ CREATE TABLE Partidos (
 );
 
 INSERT INTO Partidos (fecha, jornada, id_equipo_local, id_equipo_visitante, goles_local, goles_visitante, comentarios) VALUES
-('2024-09-22', 1, 1, 2, 8, 6),
-('2024-09-29', 2, 3, 4, 8, 10),
-('2024-10-06', 3, 5, 6, 7, 3),
-('2024-10-12', 4, 7, 8, 9, 3),
-('2024-10-19', 5, 9, 10, 4, 11),
-('2024-11-03', 6, 11, 12, 7, 6),
-('2024-11-09', 7, 13, 14, 10, 4),
-('2024-11-16', 8, 15, 16, 6, 5),
-('2024-11-24', 9, 17, 18, 5, 9),
-('2024-11-30', 10, 19, 20, 3, 8),
-('2024-12-07', 11, 21, 22, 9, 8),
-('2024-12-21', 12, 23, 24, 8, 5);
+('2024-09-22', 1, 1, 2, 8, 6, 'partido-samba'),
+('2024-09-29', 2, 3, 4, 8, 10, 'partido-samba'),
+('2024-10-06', 3, 5, 6, 7, 3, 'partido-samba'),
+('2024-10-12', 4, 7, 8, 9, 3, 'partido-samba'),
+('2024-10-19', 5, 9, 10, 4, 11, 'partido-samba'),
+('2024-11-03', 6, 11, 12, 7, 6, 'partido-samba'),
+('2024-11-09', 7, 13, 14, 10, 4, 'partido-samba'),
+('2024-11-16', 8, 15, 16, 6, 5, 'partido-samba'),
+('2024-11-24', 9, 17, 18, 5, 9, 'partido-samba'),
+('2024-11-30', 10, 19, 20, 3, 8, 'partido-samba'),
+('2024-12-07', 11, 21, 22, 9, 8, 'partido-samba'),
+('2024-12-21', 12, 23, 24, 8, 5, 'partido-samba');
 
 CREATE TABLE Eventos (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -306,9 +306,10 @@ CREATE TABLE Eventos (
     minuto INT NOT NULL,
     tipo_evento VARCHAR(20) NOT NULL,
     id_jugador_principal INT NOT NULL,
-    id_jugador_secundario INT
+    id_jugador_secundario INT,
     FOREIGN KEY (id_partido) REFERENCES Partidos(id),
-    FOREIGN KEY (id_jugador) REFERENCES Jugadores(id)
+    FOREIGN KEY (id_jugador_principal) REFERENCES Jugadores(id),
+    FOREIGN KEY (id_jugador_secundario) REFERENCES Jugadores(id)
 );
 
 INSERT INTO Eventos (id_partido, minuto, tipo_evento, id_jugador_principal, id_jugador_secundario) VALUES
@@ -366,7 +367,7 @@ INSERT INTO Eventos (id_partido, minuto, tipo_evento, id_jugador_principal, id_j
 (5, NULL, 'gol', 21, 13),
 (5, NULL, 'gol', 4, NULL),
 (5, NULL, 'gol', 5, NULL),
-(5 NULL, 'gol', 4, 5),
+(5, NULL, 'gol', 4, 5),
 (5, NULL, 'gol', 9, NULL),
 (5, NULL, 'gol', 5, 20),
 (5, NULL, 'gol', 3, NULL),
@@ -547,7 +548,7 @@ CREATE TABLE usuarios (
     id int(11) NOT NULL,
     username varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
-    email varchar(255) NOT NULL
+    email varchar(255) NOT NULL,
     created_at timestamp NOT NULL DEFAULT current_timestamp()
 );
 

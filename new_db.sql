@@ -15,7 +15,7 @@ CREATE TABLE Jugadores (
     fisico int 
 );
 
-INSERT INTO 'Jugadores' ('nombre', 'dorsal', 'posicion', 'ritmo', 'disparo', 'pase', 'regate', 'defensa', 'fisico') VALUES 
+INSERT INTO Jugadores (nombre, dorsal, posicion, ritmo, disparo, pase, regate, defensa, fisico) VALUES 
 ('AITOR', '420', 'CM', 75, 74, 84, 81, 75, 75),
 ('ALBERTO', NULL, 'GK', NULL, NULL, NULL, NULL, NULL, NULL),
 ('ALVARO', '23', 'CB', 76, 70, 75, 66, 86, 85),
@@ -44,7 +44,7 @@ CREATE TABLE Estadisticas (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_jugador INT NOT NULL,
     partidos_jugados INT NOT NULL,
-    vitorias INT NOT NULL,
+    victorias INT NOT NULL,
     derrotas INT NOT NULL,
     goles INT NOT NULL,
     asistencias INT NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE Estadisticas (
     FOREIGN KEY (id_jugador) REFERENCES Jugadores(id)
 );
 
-INSERT INTO 'Estadisticas' ('id_jugador', 'partidos_jugados', 'vitorias', 'derrotas', 'goles', 'asistencias', 'paradas', 'defensa', 'puntos') VALUES 
+INSERT INTO Estadisticas (id_jugador, partidos_jugados, victorias, derrotas, goles, asistencias, paradas, defensa, puntos) VALUES 
 (1, 10, 3, 7, 6, 8, 1, 4, 73.90),
 (2, 0, 0, 0, NULL, NULL, NULL, NULL, NULL),
 (3, 10, 8, 2, 6, 8, 1, 9, 105.10),
@@ -83,7 +83,7 @@ CREATE TABLE Equipos (  -- Create the teams table
     color VARCHAR(20) NOT NULL
 );
 
-INSERT INTO 'Equipos' ('color') VALUES 
+INSERT INTO Equipos (color) VALUES 
 ('negro'),
 ('blanco'),
 ('azul'),
@@ -117,7 +117,7 @@ CREATE TABLE Plantilla (
     FOREIGN KEY (id_equipo) REFERENCES Equipos(id)
 );
 
-INSERT INTO 'Plantilla' ('id_equipo', 'id_jugador') VALUES
+INSERT INTO Plantilla (id_equipo, id_jugador) VALUES
 (1, 1),
 (1, 13),
 (1, 8),
@@ -286,7 +286,7 @@ CREATE TABLE Partidos (
     FOREIGN KEY (id_equipo_visitante) REFERENCES Equipos(id)
 );
 
-INSERT INTO 'Partidos' ('fecha', 'jornada', 'id_equipo_local', 'id_equipo_visitante', 'goles_local', 'goles_visitante', 'comentarios') VALUES
+INSERT INTO Partidos (fecha, jornada, id_equipo_local, id_equipo_visitante, goles_local, goles_visitante, comentarios) VALUES
 ('2024-09-22', 1, 1, 2, 8, 6),
 ('2024-09-29', 2, 3, 4, 8, 10),
 ('2024-10-06', 3, 5, 6, 7, 3),
@@ -311,7 +311,7 @@ CREATE TABLE Eventos (
     FOREIGN KEY (id_jugador) REFERENCES Jugadores(id)
 );
 
-INSERT INTO `Eventos` (`id_partido`, `minuto`, `tipo_evento`, `id_jugador_principal`, `id_jugador_secundario`) VALUES
+INSERT INTO Eventos (id_partido, minuto, tipo_evento, id_jugador_principal, id_jugador_secundario) VALUES
 (1, NULL, 'gol', 6, 9),
 (1, NULL, 'gol', 6, 9),
 (1, NULL, 'gol', 9, 3),
@@ -401,7 +401,7 @@ CREATE TABLE Valoraciones (
     FOREIGN KEY (id_partido) REFERENCES Partidos(id)
 );
 
-INSERT INTO `Valoraciones` (`id_jugador`, `id_partido`, `valoracion_personal`, `valoracion_compañeros`, `overall`) VALUES
+INSERT INTO Valoraciones (id_jugador, id_partido, valoracion_personal, valoracion_compañeros, overall) VALUES
 (1, 1, 3, 3, 8.0),
 (3, 1, 4, 5, 12.7),
 (4, 1, 4, 3, 6.3),
@@ -552,5 +552,5 @@ CREATE TABLE usuarios (
 );
 
 
-INSERT INTO 'usuarios' ('id', 'username', 'password', 'email', 'created_at') VALUES
+INSERT INTO usuarios (id, username, password, email, created_at) VALUES
 (1, 'admin', '$2y$10$NVFhHl83vsLgzOAF7d1bm.PboVGo0tSrChWXS8H/GY2Vu7aw/buja', 'adminsambaleague@gmail.com', '2025-01-27 18:48:25');

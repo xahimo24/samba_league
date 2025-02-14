@@ -1,30 +1,58 @@
 <?php
 session_start();
-if (! isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
 }
 include 'db_connection.php';
 
-// Obtener la información de los jugadores
-$sql       = "SELECT * FROM jugadores";
-$result    = $conn->query($sql);
+// Obtener la información de los jugadores con estadísticas
+$sql = "SELECT j.id, j.nombre, j.posicion, j.dorsal, 
+               e.partidos_jugados, e.victorias, e.derrotas, e.goles, e.asistencias, e.paradas, e.defensa AS stats_defensivas, 
+               ROUND((e.victorias / NULLIF(e.partidos_jugados, 0)) * 100, 2) AS win_rate, 
+               e.puntos AS suma_puntos
+        FROM Jugadores j
+        LEFT JOIN Estadisticas e ON j.id = e.id_jugador"; // Unir con la tabla Estadisticas
+$result = $conn->query($sql);
 $jugadores = [];
+
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
+        // Calcular el overall si es necesario
+        $partidos_jugados = $row['partidos_jugados'] ?? 0;
+        $suma_puntos = $row['suma_puntos'] ?? 0;
+        $overall = ($partidos_jugados > 0) ? round($suma_puntos / $partidos_jugados, 2) : 0.0;
+
+        // Agregar el overall al array de datos del jugador
+        $row['overall'] = $overall;
+
+        // Almacenar los datos del jugador
         $jugadores[] = $row;
     }
+} else {
+    echo "No se encontraron jugadores.";
 }
 
 // Obtener la información de los partidos
-$sql       = "SELECT * FROM partidos";
-$result    = $conn->query($sql);
+$sql = "SELECT p.id, p.fecha, p.jornada, 
+               e1.color AS equipo_local, 
+               e2.color AS equipo_visitante, 
+               p.goles_local, p.goles_visitante, p.comentarios
+        FROM Partidos p
+        INNER JOIN Equipos e1 ON p.id_equipo_local = e1.id
+        INNER JOIN Equipos e2 ON p.id_equipo_visitante = e2.id";
+$result = $conn->query($sql);
 $partidos = [];
+
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $partidos[] = $row;
     }
+} else {
+    echo "No se encontraron partidos.";
 }
+
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -233,8 +261,8 @@ if ($result->num_rows > 0) {
                         <tr>
                             <td><?php echo $jugador['nombre']; ?></td>
                             <td><?php echo $jugador['partidos_jugados']; ?></td>
-                            <td><?php echo $jugador['partidos_ganados']; ?></td>
-                            <td><?php echo $jugador['partidos_perdidos']; ?></td>
+                            <td><?php echo $jugador['victorias']; ?></td>
+                            <td><?php echo $jugador['derrotas']; ?></td>
                             <td><?php echo $jugador['posicion']; ?></td>
                             <td><?php echo $jugador['goles']; ?></td>
                             <td><?php echo $jugador['asistencias']; ?></td>
@@ -488,8 +516,8 @@ if ($result->num_rows > 0) {
                     document.getElementById('edit_partido_id').value = partido.id;
                     document.getElementById('edit_fecha').value = partido.fecha;
                     document.getElementById('edit_jornada').value = partido.jornada;
-                    document.getElementById('edit_resultado_local').value = partido.resultado_local;
-                    document.getElementById('edit_resultado_visitante').value = partido.resultado_visitante;
+                    document.getElementById('edit_resultado_local').value = partido.goles_local;
+                    document.getElementById('edit_resultado_visitante').value = partido.goles_visitante;
                     // Populate other fields as needed
                 }
             }

@@ -82,6 +82,8 @@ $conn->close();
             <ul>
                 <li><a href="#partidos">PARTIDOS</a></li>
                 <li><a href="#jugadores">JUGADORES</a></li>
+                <li><a href="#valoraciones">VALORACIONES</a></li>
+                <li><a href="#pendientes">TAREAS PENDIENTES</a></li>
             </ul>
             <ul>
                 <li><a href="conf-samba.php">Inicio</a></li>
@@ -147,7 +149,7 @@ $conn->close();
                         <label for="event_player_main">Jugador Principal:</label>
                         <select id="event_player_main" name="event_player_main">
                             <option value="">Seleccionar Jugador</option>
-                            <?php foreach ($jugadores as $jugador): ?>
+                            <?php foreach ($jugadores as $jugador): ?>F
                                 <option value="<?php echo $jugador['id']; ?>"><?php echo $jugador['nombre']; ?></option>
                             <?php endforeach; ?>
                         </select>
@@ -176,7 +178,8 @@ $conn->close();
                     <select id="select_jornada" onchange="loadMatchData()">
                         <option value="">Seleccionar Jornada</option>
                         <?php foreach ($partidos as $partido): ?>
-                            <option value="<?php echo $partido['id']; ?>">Jornada <?php echo $partido['jornada']; ?></option>
+                            <option value="<?php echo $partido['id']; ?>">Jornada <?php echo $partido['jornada']; ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                     <form id="editMatchForm" method="POST" action="update-partido.php">
@@ -189,44 +192,6 @@ $conn->close();
                         <input type="number" id="edit_resultado_local" name="resultado_local" required>
                         <label for="edit_resultado_visitante">Resultado Visitante:</label>
                         <input type="number" id="edit_resultado_visitante" name="resultado_visitante" required>
-
-                        <label for="edit_team_color">Color del Equipo:</label>
-                        <select id="edit_team_color" name="team_color">
-                            <option value="">Selecciona Color</option>
-                            <option value="azul">Azul</option>
-                            <option value="blanco">Blanco</option>
-                            <option value="samba">Equipacion Samba</option>
-                            <option value="rojo">Rojo</option>
-                        </select>
-
-                        <!-- Listar todos los jugadores en forma de lista -->
-                        <label id="edit_team_player" name="team_player">Jugadores del Equipo:</label>
-                        <?php foreach ($jugadores as $jugador): ?>
-                            <input value="<?php echo $jugador['id']; ?>"><?php echo $jugador['nombre']; ?></input>
-                        <?php endforeach; ?>
-
-                        <button type="button" onclick="addEditTeamPlayer()">Añadir Jugador</button>
-                        <ul id="edit_team_players_list"></ul>
-                        <label for="edit_event_minute">Minuto del Evento:</label>
-                        <input type="number" id="edit_event_minute" name="event_minute">
-                        <label for="edit_event_type">Tipo de Evento:</label>
-                        <input type="text" id="edit_event_type" name="event_type">
-                        <label for="edit_event_player_main">Jugador Principal:</label>
-                        <select id="edit_event_player_main" name="event_player_main">
-                            <option value="">Seleccionar Jugador</option>
-                            <?php foreach ($jugadores as $jugador): ?>
-                                <option value="<?php echo $jugador['id']; ?>"><?php echo $jugador['nombre']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <label for="edit_event_player_secondary">Jugador Secundario:</label>
-                        <select id="edit_event_player_secondary" name="event_player_secondary">
-                            <option value="">Ninguno</option>
-                            <?php foreach ($jugadores as $jugador): ?>
-                                <option value="<?php echo $jugador['id']; ?>"><?php echo $jugador['nombre']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <button type="button" onclick="addEditEvent()">Añadir Evento</button>
-                        <ul id="edit_events_list"></ul>
                         <button type="submit">Guardar Cambios</button>
                     </form>
                 </div>
@@ -520,6 +485,35 @@ $conn->close();
                     document.getElementById('edit_resultado_visitante').value = partido.goles_visitante;
                     // Populate other fields as needed
                 }
+            }
+        }
+
+        function editPlayer(id) {
+            currentPlayerIndex = jugadores.findIndex(j => j.id == id);
+            if (currentPlayerIndex !== -1) { // Add this check
+                fillForm(currentPlayerIndex);
+                document.getElementById('editPlayerModal').style.display = 'block';
+            } else {
+                console.error('Player not found');
+            }
+        }
+
+        function fillForm(index) {
+            const jugador = jugadores[index];
+            if (jugador) { // Add this check
+                document.getElementById('playerId').value = jugador.id;
+                document.getElementById('nombre').value = jugador.nombre;
+                document.getElementById('partidos_jugados').value = jugador.partidos_jugados;
+                document.getElementById('partidos_ganados').value = jugador.victorias;
+                document.getElementById('partidos_perdidos').value = jugador.derrotas;
+                document.getElementById('posicion').value = jugador.posicion;
+                document.getElementById('goles').value = jugador.goles;
+                document.getElementById('asistencias').value = jugador.asistencias;
+                document.getElementById('paradas').value = jugador.paradas;
+                document.getElementById('stats_defensivas').value = jugador.stats_defensivas;
+                document.getElementById('dorsal').value = jugador.dorsal;
+            } else {
+                console.error('Invalid player index');
             }
         }
     </script>

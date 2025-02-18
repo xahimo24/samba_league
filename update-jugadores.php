@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Actualizar la información del jugador en la tabla Jugadores
     $sql = "UPDATE Jugadores SET nombre = ?, dorsal = ?, posicion = ?, ritmo = ?, disparo = ?, pase = ?, regate = ?, defensa = ?, fisico = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssiiiiiii", $nombre, $dorsal, $posicion, $ritmo, $disparo, $pase, regate, $defensa, $fisico, $id);
+    $stmt->bind_param("sssiiiiiii", $nombre, $dorsal, $posicion, $ritmo, $disparo, $pase, $regate, $defensa, $fisico, $id);
 
     if ($stmt->execute()) {
         // Actualizar las estadísticas del jugador en la tabla Estadisticas

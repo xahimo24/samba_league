@@ -96,11 +96,10 @@
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <h2>Incorporarse</h2>
-                    <p>Para incorporarse a la liga hay varios factores en juego:</p><br>
+                    <p>Para incorporarse a la liga hay dos factores en juego:</p><br>
                     <ul>
                         <li>Ser amigo de uno o varios integrantes de la liga</li>
                         <li>Asistir minimo a 3 partidos</li>
-                        <li class="camiseta">Comprar la <a href="https://zentral.es/producto/harvest-team-2/" target="blank">camiseta oficial de la liga</a></li>
                     </ul>
                     <p class="info">Toda decision sera tomada por el Equipo Directivo de Samba League</p>
                 </div>

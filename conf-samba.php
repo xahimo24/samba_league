@@ -149,7 +149,7 @@ $conn->close();
                         <label for="event_player_main">Jugador Principal:</label>
                         <select id="event_player_main" name="event_player_main">
                             <option value="">Seleccionar Jugador</option>
-                            <?php foreach ($jugadores as $jugador): ?>
+                            <?php foreach ($jugadores as $jugador): ?>F
                                 <option value="<?php echo $jugador['id']; ?>"><?php echo $jugador['nombre']; ?></option>
                             <?php endforeach; ?>
                         </select>
@@ -178,7 +178,8 @@ $conn->close();
                     <select id="select_jornada" onchange="loadMatchData()">
                         <option value="">Seleccionar Jornada</option>
                         <?php foreach ($partidos as $partido): ?>
-                            <option value="<?php echo $partido['id']; ?>">Jornada <?php echo $partido['jornada']; ?></option>
+                            <option value="<?php echo $partido['id']; ?>">Jornada <?php echo $partido['jornada']; ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                     <form id="editMatchForm" method="POST" action="update-partido.php">
@@ -191,44 +192,6 @@ $conn->close();
                         <input type="number" id="edit_resultado_local" name="resultado_local" required>
                         <label for="edit_resultado_visitante">Resultado Visitante:</label>
                         <input type="number" id="edit_resultado_visitante" name="resultado_visitante" required>
-
-                        <label for="edit_team_color">Color del Equipo:</label>
-                        <select id="edit_team_color" name="team_color">
-                            <option value="">Selecciona Color</option>
-                            <option value="azul">Azul</option>
-                            <option value="blanco">Blanco</option>
-                            <option value="samba">Equipacion Samba</option>
-                            <option value="rojo">Rojo</option>
-                        </select>
-
-                        <!-- Listar todos los jugadores en forma de lista -->
-                        <label id="edit_team_player" name="team_player">Jugadores del Equipo:</label>
-                        <?php foreach ($jugadores as $jugador): ?>
-                            <input value="<?php echo $jugador['id']; ?>"><?php echo $jugador['nombre']; ?></input>
-                        <?php endforeach; ?>
-
-                        <button type="button" onclick="addEditTeamPlayer()">Añadir Jugador</button>
-                        <ul id="edit_team_players_list"></ul>
-                        <label for="edit_event_minute">Minuto del Evento:</label>
-                        <input type="number" id="edit_event_minute" name="event_minute">
-                        <label for="edit_event_type">Tipo de Evento:</label>
-                        <input type="text" id="edit_event_type" name="event_type">
-                        <label for="edit_event_player_main">Jugador Principal:</label>
-                        <select id="edit_event_player_main" name="event_player_main">
-                            <option value="">Seleccionar Jugador</option>
-                            <?php foreach ($jugadores as $jugador): ?>
-                                <option value="<?php echo $jugador['id']; ?>"><?php echo $jugador['nombre']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <label for="edit_event_player_secondary">Jugador Secundario:</label>
-                        <select id="edit_event_player_secondary" name="event_player_secondary">
-                            <option value="">Ninguno</option>
-                            <?php foreach ($jugadores as $jugador): ?>
-                                <option value="<?php echo $jugador['id']; ?>"><?php echo $jugador['nombre']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <button type="button" onclick="addEditEvent()">Añadir Evento</button>
-                        <ul id="edit_events_list"></ul>
                         <button type="submit">Guardar Cambios</button>
                     </form>
                 </div>
@@ -367,6 +330,195 @@ $conn->close();
     <script>
         const jugadores = <?php echo json_encode($jugadores); ?>;
         const partidos = <?php echo json_encode($partidos); ?>;
+<<<<<<< HEAD
+=======
+        let teamPlayers = [];
+        let events = [];
+        let editTeamPlayers = [];
+        let editEvents = [];
+
+        function openCreateMatchModal() {
+            document.getElementById('createMatchModal').style.display = 'block';
+        }
+
+        function closeCreateMatchModal() {
+            document.getElementById('createMatchModal').style.display = 'none';
+            clearTemporaryData();
+            resetForm();
+        }
+
+        function openEditMatchModal() {
+            document.getElementById('editMatchModal').style.display = 'block';
+        }
+
+        function closeEditMatchModal() {
+            document.getElementById('editMatchModal').style.display = 'none';
+            clearEditTemporaryData();
+            resetEditForm();
+        }
+
+        function addTeamPlayer() {
+            const color = document.getElementById('team_color').value;
+            const player = document.getElementById('team_player').value;
+            if (player) {
+                teamPlayers.push({
+                    color,
+                    player
+                });
+                updateTeamPlayersList();
+            }
+        }
+
+        function updateTeamPlayersList() {
+            const list = document.getElementById('team_players_list');
+            list.innerHTML = '';
+            teamPlayers.forEach((tp, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${tp.color}: ${tp.player}`;
+                list.appendChild(li);
+            });
+        }
+
+        function addEvent() {
+            const minute = document.getElementById('event_minute').value;
+            const type = document.getElementById('event_type').value;
+            const playerMain = document.getElementById('event_player_main').value;
+            const playerSecondary = document.getElementById('event_player_secondary').value;
+            if (playerMain) {
+                events.push({
+                    minute,
+                    type,
+                    playerMain,
+                    playerSecondary
+                });
+                updateEventsList();
+            }
+        }
+
+        function updateEventsList() {
+            const list = document.getElementById('events_list');
+            list.innerHTML = '';
+            events.forEach((event, index) => {
+                const li = document.createElement('li');
+                li.textContent = `Minuto ${event.minute}: ${event.type} - ${event.playerMain} ${event.playerSecondary ? '(Asistencia de ' + event.playerSecondary + ')' : ''}`;
+                list.appendChild(li);
+            });
+        }
+
+        function clearTemporaryData() {
+            teamPlayers = [];
+            events = [];
+            updateTeamPlayersList();
+            updateEventsList();
+        }
+
+        function resetForm() {
+            document.getElementById('createMatchForm').reset();
+        }
+
+        function addEditTeamPlayer() {
+            const color = document.getElementById('edit_team_color').value;
+            const player = document.getElementById('edit_team_player').value;
+            if (player) {
+                editTeamPlayers.push({
+                    color,
+                    player
+                });
+                updateEditTeamPlayersList();
+            }
+        }
+
+        function updateEditTeamPlayersList() {
+            const list = document.getElementById('edit_team_players_list');
+            list.innerHTML = '';
+            editTeamPlayers.forEach((tp, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${tp.color}: ${tp.player}`;
+                list.appendChild(li);
+            });
+        }
+
+        function addEditEvent() {
+            const minute = document.getElementById('edit_event_minute').value;
+            const type = document.getElementById('edit_event_type').value;
+            const playerMain = document.getElementById('edit_event_player_main').value;
+            const playerSecondary = document.getElementById('edit_event_player_secondary').value;
+            if (playerMain) {
+                editEvents.push({
+                    minute,
+                    type,
+                    playerMain,
+                    playerSecondary
+                });
+                updateEditEventsList();
+            }
+        }
+
+        function updateEditEventsList() {
+            const list = document.getElementById('edit_events_list');
+            list.innerHTML = '';
+            editEvents.forEach((event, index) => {
+                const li = document.createElement('li');
+                li.textContent = `Minuto ${event.minute}: ${event.type} - ${event.playerMain} ${event.playerSecondary ? '(Asistencia de ' + event.playerSecondary + ')' : ''}`;
+                list.appendChild(li);
+            });
+        }
+
+        function clearEditTemporaryData() {
+            editTeamPlayers = [];
+            editEvents = [];
+            updateEditTeamPlayersList();
+            updateEditEventsList();
+        }
+
+        function resetEditForm() {
+            document.getElementById('editMatchForm').reset();
+        }
+
+        function loadMatchData() {
+            const partidoId = document.getElementById('select_jornada').value;
+            if (partidoId) {
+                const partido = partidos.find(p => p.id == partidoId);
+                if (partido) {
+                    document.getElementById('edit_partido_id').value = partido.id;
+                    document.getElementById('edit_fecha').value = partido.fecha;
+                    document.getElementById('edit_jornada').value = partido.jornada;
+                    document.getElementById('edit_resultado_local').value = partido.goles_local;
+                    document.getElementById('edit_resultado_visitante').value = partido.goles_visitante;
+                    // Populate other fields as needed
+                }
+            }
+        }
+
+        function editPlayer(id) {
+            currentPlayerIndex = jugadores.findIndex(j => j.id == id);
+            if (currentPlayerIndex !== -1) { // Add this check
+                fillForm(currentPlayerIndex);
+                document.getElementById('editPlayerModal').style.display = 'block';
+            } else {
+                console.error('Player not found');
+            }
+        }
+
+        function fillForm(index) {
+            const jugador = jugadores[index];
+            if (jugador) { // Add this check
+                document.getElementById('playerId').value = jugador.id;
+                document.getElementById('nombre').value = jugador.nombre;
+                document.getElementById('partidos_jugados').value = jugador.partidos_jugados;
+                document.getElementById('partidos_ganados').value = jugador.victorias;
+                document.getElementById('partidos_perdidos').value = jugador.derrotas;
+                document.getElementById('posicion').value = jugador.posicion;
+                document.getElementById('goles').value = jugador.goles;
+                document.getElementById('asistencias').value = jugador.asistencias;
+                document.getElementById('paradas').value = jugador.paradas;
+                document.getElementById('stats_defensivas').value = jugador.stats_defensivas;
+                document.getElementById('dorsal').value = jugador.dorsal;
+            } else {
+                console.error('Invalid player index');
+            }
+        }
+>>>>>>> 3ba653384797bb1576332623c0df6878d0bd89c4
     </script>
 </body>
 

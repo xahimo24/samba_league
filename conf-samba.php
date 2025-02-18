@@ -330,8 +330,6 @@ $conn->close();
     <script>
         const jugadores = <?php echo json_encode($jugadores); ?>;
         const partidos = <?php echo json_encode($partidos); ?>;
-<<<<<<< HEAD
-=======
         let teamPlayers = [];
         let events = [];
         let editTeamPlayers = [];
@@ -518,7 +516,6 @@ $conn->close();
                 console.error('Invalid player index');
             }
         }
->>>>>>> 3ba653384797bb1576332623c0df6878d0bd89c4
     </script>
 </body>
 

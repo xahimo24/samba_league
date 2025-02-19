@@ -17,28 +17,28 @@ CREATE TABLE Jugadores (
 );
 
 INSERT INTO Jugadores (nombre, dorsal, posicion, perfil, ritmo, disparo, pase, regate, defensa, fisico) VALUES 
-('AITOR', '420', 'CM', 'defensivo',75, 74, 84, 81, 75, 75),
+('AITOR', 420, 'CM', 'defensivo',75, 74, 84, 81, 75, 75),
 ('ALBERTO', NULL, 'GK', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('ALVARO', '23', 'CB', 'defensivo', 76, 70, 75, 66, 86, 85),
-('ANDREU', '32', 'CM', 'atacante', 75, 75, 81, 82, 65, 65),
-('BIEL', '14', 'ST', 'atacante', 79, 77, 65, 72, 18, 75),
-('BRAIS', '10', 'CM', 'atacante', 70, 63, 82, 81, 67, 65),
-('EDU', '37', 'CB', 'defensivo', 60, 69, 77, 63, 82, 80),
-('HUGO', '45', 'CM', 'atacante', 66, 74, 76, 64, 67, 68),
-('JAVI', '11', 'ST', 'atacante', 85, 88, 77, 82, 58, 77),
-('JOAN', '3', 'CB', 'defensivo', 86, 73, 72, 74, 78, 84),
-('PETACA', '17', 'CB', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('PEDRI', '78', 'CB', 'defensivo', 67, 62, 65, 60, 82, 84),
-('JUSI', '6', 'CM', 'atacante', 73, 75, 76, 76, 62, 63),
-('MARCEL', '37', 'ST', 'atacante', 77, 84, 72, 72, 34, 74),
-('MIQUEL', '1', 'CM', 'atacante', 77, 48, 60, 55, 66, 65),
-('NANO', '16', 'CM', 'atacante',74, 79, 76, 77, 66, 76),
-('OSCAR', '8', 'ST', 'atacante', 72, 78, 66, 70, 64, 78),
-('PERAS', '87', 'CM', 'defensivo', 74, 74, 81, 79, 69, 75),
-('VITO', '37', 'ST', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('XASQUI', '15', 'CB', 'defensivo', 65, 68, 71, 64, 84, 83),
-('XAVI', '5', 'CM', 'defensivo', 70, 80, 86, 81, 75, 68),
-('COCA', NULL, 'ST', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('ALVARO', 23, 'CB', 'defensivo', 76, 70, 75, 66, 86, 85),
+('ANDREU', 32, 'CM', 'atacante', 75, 75, 81, 82, 65, 65),
+('BIEL', 14, 'ST', 'atacante', 79, 77, 65, 72, 18, 75),
+('BRAIS', 10, 'CM', 'atacante', 70, 63, 82, 81, 67, 65),
+('EDU', 37, 'CB', 'defensivo', 60, 69, 77, 63, 82, 80),
+('HUGO', 45, 'CM', 'atacante', 66, 74, 76, 64, 67, 68),
+('JAVI', 11, 'ST', 'atacante', 85, 88, 77, 82, 58, 77),
+('JOAN', 3, 'CB', 'defensivo', 86, 73, 72, 74, 78, 84),
+('PETACA', 17, 'CB', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('PEDRI', 78, 'CB', 'defensivo', 67, 62, 65, 60, 82, 84),
+('JUSI', 6, 'CM', 'atacante', 73, 75, 76, 76, 62, 63),
+('MARCEL', 9, 'ST', 'atacante', 77, 84, 72, 72, 34, 74),
+('MIQUEL', 1, 'CM', 'atacante', 77, 48, 60, 55, 66, 65),
+('NANO', 16, 'CM', 'atacante',74, 79, 76, 77, 66, 76),
+('OSCAR', 8, 'ST', 'atacante', 72, 78, 66, 70, 64, 78),
+('PERAS', 87, 'CM', 'defensivo', 74, 74, 81, 79, 69, 75),
+('VITO', 37, 'ST', 'atacante', NULL, NULL, NULL, NULL, NULL, NULL),
+('XASQUI', 15, 'CB', 'defensivo', 65, 68, 71, 64, 84, 83),
+('XAVI', 5, 'CM', 'defensivo', 70, 80, 86, 81, 75, 68),
+('COCA', 69, 'ST', 'atacante', NULL, NULL, NULL, NULL, NULL, NULL),
 ('RIGAU', NULL, 'ST', 'atacante', 79, 79, 78, 78, 18, 77);
 
 CREATE TABLE Estadisticas (
@@ -282,13 +282,14 @@ CREATE TABLE Partidos (
     id_equipo_visitante INT NOT NULL,
     goles_local INT NOT NULL,
     goles_visitante INT NOT NULL,
-    comentarios TEXT,
+    tipo VARCHAR(255),
+    estadio VARCHAR(255),
     FOREIGN KEY (id_equipo_local) REFERENCES Equipos(id),
     FOREIGN KEY (id_equipo_visitante) REFERENCES Equipos(id)
 );
 
-INSERT INTO Partidos (fecha, jornada, id_equipo_local, id_equipo_visitante, goles_local, goles_visitante, comentarios) VALUES
-('2024-09-22', 1, 1, 2, 8, 6, 'partido-samba'),
+INSERT INTO Partidos (fecha, jornada, id_equipo_local, id_equipo_visitante, goles_local, goles_visitante, tipo, estadio) VALUES
+('2024-09-22', 1, 1, 2, 8, 6, 'partido-samba', 'Fundacion Brafa'),
 ('2024-09-29', 2, 3, 4, 8, 10, 'partido-samba'),
 ('2024-10-06', 3, 5, 6, 7, 3, 'partido-samba'),
 ('2024-10-12', 4, 7, 8, 9, 3, 'partido-samba'),

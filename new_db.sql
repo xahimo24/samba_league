@@ -290,17 +290,17 @@ CREATE TABLE Partidos (
 
 INSERT INTO Partidos (fecha, jornada, id_equipo_local, id_equipo_visitante, goles_local, goles_visitante, tipo, estadio) VALUES
 ('2024-09-22', 1, 1, 2, 8, 6, 'partido-samba', 'Fundacion Brafa'),
-('2024-09-29', 2, 3, 4, 8, 10, 'partido-samba'),
-('2024-10-06', 3, 5, 6, 7, 3, 'partido-samba'),
-('2024-10-12', 4, 7, 8, 9, 3, 'partido-samba'),
-('2024-10-19', 5, 9, 10, 4, 11, 'partido-samba'),
-('2024-11-03', 6, 11, 12, 7, 6, 'partido-samba'),
-('2024-11-09', 7, 13, 14, 10, 4, 'partido-samba'),
-('2024-11-16', 8, 15, 16, 6, 5, 'partido-samba'),
-('2024-11-24', 9, 17, 18, 5, 9, 'partido-samba'),
-('2024-11-30', 10, 19, 20, 3, 8, 'partido-samba'),
-('2024-12-07', 11, 21, 22, 9, 8, 'partido-samba'),
-('2024-12-21', 12, 23, 24, 8, 5, 'partido-samba');
+('2024-09-29', 2, 3, 4, 8, 10, 'partido-samba', 'Fundacion Brafa'),
+('2024-10-06', 3, 5, 6, 7, 3, 'partido-samba', 'Fundacion Brafa'),
+('2024-10-12', 4, 7, 8, 9, 3, 'partido-samba', 'Highlands School'),
+('2024-10-19', 5, 9, 10, 4, 11, 'partido-samba', 'Colegio Thau'),
+('2024-11-03', 6, 11, 12, 7, 6, 'partido-samba', 'GolaGol'),
+('2024-11-09', 7, 13, 14, 10, 4, 'partido-samba', 'Highlands School'),
+('2024-11-16', 8, 15, 16, 6, 5, 'partido-samba', 'Highlands School'),
+('2024-11-24', 9, 17, 18, 5, 9, 'partido-samba', 'Futbol Sala Valldaura'),
+('2024-11-30', 10, 19, 20, 3, 8, 'partido-samba', 'Highlands School'),
+('2024-12-07', 11, 21, 22, 9, 8, 'partido-samba', 'Scala Dei'),
+('2024-12-21', 12, 23, 24, 8, 5, 'partido-samba', 'Highlands School');
 
 CREATE TABLE Eventos (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -555,4 +555,4 @@ CREATE TABLE usuarios (
 );
 
 INSERT INTO usuarios (id, username, password, email, created_at) VALUES
-(1, 'admin', '$2y$10$NVFhHl83vsLgzOAF7d1bm.PboVGo0tSrChWXS8H/GY2Vu7aw/buja', 'adminsambaleague@gmail.com', '2025-01-27 18:48:25');
+(1, 'romario', '$2y$10$NVFhHl83vsLgzOAF7d1bm.PboVGo0tSrChWXS8H/GY2Vu7aw/buja', 'adminsambaleague@gmail.com', '2025-01-27 18:48:25');

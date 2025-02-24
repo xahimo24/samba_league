@@ -15,7 +15,7 @@ if ($resultJugadores->num_rows > 0) {
 }
 
 // Consulta para obtener los partidos
-$sql = "SELECT p.id, p.fecha, p.goles_local AS resultado_local, p.goles_visitante AS resultado_visitante, e.color, GROUP_CONCAT(j.nombre SEPARATOR ', ') AS jugadores, p.jornada
+$sql = "SELECT p.id, p.fecha, p.goles_local AS resultado_local, p.goles_visitante AS resultado_visitante, e.color, GROUP_CONCAT(j.nombre SEPARATOR ', ') AS jugadores, p.jornada, p.estadio
         FROM Partidos p
         INNER JOIN Equipos e ON p.id_equipo_local = e.id OR p.id_equipo_visitante = e.id
         INNER JOIN Plantilla pl ON e.id = pl.id_equipo
@@ -45,6 +45,7 @@ if ($result->num_rows > 0) {
             'color'       => $row['color'],
             'jugadores'   => $row['jugadores'],
             'jornada'     => $row['jornada'],
+            'estadio'     => $row['estadio'] 
         ];
     }
 }

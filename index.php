@@ -227,10 +227,27 @@
                     foreach ($partidos as $partidoId => $partidoData) {
                         $homeTeam = $partidoData[0];
                         $awayTeam = $partidoData[1];
+                        $estadio  = $homeTeam['estadio'] ?: $awayTeam['estadio'];
                         echo "
     <div class='match-item'>
   <div class='match-teams'>
+       <div class='match-info'>
      <p><strong>Fecha:</strong> {$homeTeam['fecha']} | <strong>Jornada:</strong> {$homeTeam['jornada']}</p>
+     <p><strong>Estadio:</strong></p>";
+                        if ($estadio) {
+                            echo "
+    <iframe
+        width='200'
+        height='200'
+        style='border:0'
+        loading='lazy'
+        allowfullscreen
+        referrerpolicy='no-referrer-when-downgrade'
+        src='https://www.google.com/maps/embed/v1/place?key=AIzaSyBttb7BifJwtfQe8acoyXPoDUD1bBl7h24&q={$estadio}'>
+    </iframe>
+    </div>";
+                        }
+                        echo "
     <div class='team-container'>
       <img src='media/img/equipaciones/{$homeTeam['color']}.png' alt='{$homeTeam['color']}'>
       <h3 class='team-header' data-team='{$homeTeam['color']}'>{$homeTeam['color']}</h3>

@@ -322,8 +322,8 @@ section {
     /* Fondo oscuro con transparencia */
 }
 
-/* Contenido del modal */
-.modal-content {
+/* Contenido del modal de login*/
+.modal-content-login{
     background-color: #fefefe;
     margin: 15% auto;
     /* Centrado verticalmente */
@@ -335,7 +335,24 @@ section {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.modal-content h2 {
+/* Contenido del modal de rules */
+.modal-content-rules {
+    background-color: #fefefe;
+    margin: 15% auto;
+    /* Centrado verticalmente */
+    padding: 20px;
+    border: 1px solid #888;
+    height: 60%;
+    width: 30%;
+    /* Ajusta el ancho del modal */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-height: 80vh; /* Ajusta la altura máxima del contenido del modal */
+    overflow-y: auto; /* Habilita el desplazamiento vertical */
+}
+
+.modal-content-login h2,
+.modal-content-rules h2 {
     font-size: 30px;
     text-align: center;
     margin-bottom: 20px;

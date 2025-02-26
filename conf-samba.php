@@ -37,7 +37,7 @@ if ($result->num_rows > 0) {
 $sql = "SELECT p.id, p.fecha, p.jornada, 
                e1.color AS equipo_local, 
                e2.color AS equipo_visitante, 
-               p.goles_local, p.goles_visitante, p.comentarios
+               p.goles_local, p.goles_visitante, p.tipo, p.estadio
         FROM Partidos p
         INNER JOIN Equipos e1 ON p.id_equipo_local = e1.id
         INNER JOIN Equipos e2 ON p.id_equipo_visitante = e2.id";

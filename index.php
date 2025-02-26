@@ -12,6 +12,8 @@
     <link rel="icon" type="image/x-icon" href="media/img/logo_sambaleague.ico">
     <link rel="stylesheet" href="media/css/style.css">
     <title>Samba League</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/material-icons@1.13.12/iconfont/material-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <script src="media/js/script.js"></script>
@@ -43,18 +45,31 @@
             <button class="header-btn">Login</button>
             <!-- Ventana emergente (modal) para login -->
             <div id="loginModal" class="modal">
-                <div class="modal-content">
+                <div class="modal-content-login">
                     <span class="close">&times;</span>
-                    <h2>Login</h2>
-                    <form method="POST" action="login.php">
-                        <label for="username">Username:</label>
-                        <input type="text" id="username" name="username" placeholder="Enter your username" required /><br /><br />
-                        <label for="password">Password:</label>
-                        <input type="password" id="password" name="password" placeholder="Enter your password" required /><br /><br />
-                        <button type="submit">Submit</button>
-                    </form>
-                </div>
-            </div>
+                    <div class="right">
+                        <div class="form">
+                            <div class="text-center">
+                                <h6><span>Log In</span> <span>Sign Up</span></h6>
+                                <input type="checkbox" class="checkbox" id="reg-log">
+                                <label for="reg-log"></label>
+                                <div class="card-3d-wrap">
+                                    <div class="card-3d-wrapper">
+                                        <div class="card-front">
+                                            <div class="center-wrap">
+                                                <h4 class="heading">Log In</h4>
+                                                <form method="POST" action="login.php">
+                                                    <div class="form-group">
+                                                        <input type="text" id="username" name="username" placeholder="Enter your username" required /><br /><br />
+                                                        <i class="input-icon material-icons">alternate_email</i>
+                                                    </div>
+                                                    
+                                                    <label for="password">Password:</label>
+                                                    <input type="password" id="password" name="password" placeholder="Enter your password" required /><br /><br />
+                                                    <button type="submit">Submit</button>
+                                                </form>
+                                            </div>
+                                        </div>
         </div>
     </div>
 </header>
@@ -106,24 +121,13 @@
             </div>
             <!-- Ventana emergente (modal) para reglas -->
             <div id="rulesModal" class="modal">
-                <div class="modal-content">
+                <div class="modal-content-rules">
                     <span class="close">&times;</span>
-                    <h2>Puntos</h2>
-                        <p>Goles +2</p>
-                        <p>Asistencias +1</p>
-                        <p>Paradas +2</p>
-                        <p>Partido Ganado +3</p>
-                        <p>3 Mejores Defensas +2</p>
-                        <p>Gol en Propia Puerta -1</p>
-                    <h2>Overall</h2>
-                        <p>50% Puntos</p>
-                        <p>15% VP (Valoracion Personal)</p>
-                        <p>35% VC (Valoracion de tus Compañeros)</p>
+                    <img src="media/img/rules-samba.jpg" alt="rules-samba">
                     <h2>Observaciones</h2>
                         <ul>
-                            <li>Si no se hace la VP tanto la VP como la VC serán un 0</li>
+                            <li>Si no se hace la VP tanto la VP como la VC serán un -1</li>
                             <li>Hay 24h para contestar a las votaciones</li>
-                            <li>No hay tarjetas amarillas ni rojas</li>
                             <li>Los partidos hasta que no eres parte de la samba no cuentan las estadíticas</li>
                             <li>En el caso de que las VP sean muy elevadas y poco comprensibles se hará un cambio de ponderaciones</li>
                             <li>Pueden haber jornadas especiales donde las STATS cuenten diferente</li>
@@ -233,8 +237,8 @@
   <div class='match-teams'>
        <div class='match-info'>
      <p><strong>Fecha:</strong> {$homeTeam['fecha']} | <strong>Jornada:</strong> {$homeTeam['jornada']}</p>
-     <p><strong>Estadio:</strong></p>";
-                        if ($estadio) {
+     <p><strong>Estadio:</strong>  $estadio</p>";
+                        if ($estadio !== null) {
                             echo "
     <iframe
         width='200'
@@ -246,6 +250,8 @@
         src='https://www.google.com/maps/embed/v1/place?key=AIzaSyBttb7BifJwtfQe8acoyXPoDUD1bBl7h24&q={$estadio}'>
     </iframe>
     </div>";
+                        } else {
+                            echo "<p> No disponible</p></div>";
                         }
                         echo "
     <div class='team-container'>

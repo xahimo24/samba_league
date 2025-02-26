@@ -293,6 +293,8 @@ button:hover {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     animation: fadeIn 0.3s ease-in-out;
+    max-height: 80vh; /* Ajusta la altura máxima del contenido del modal */
+    overflow-y: auto; /* Habilita el desplazamiento vertical */
 }
 
 @keyframes fadeIn {

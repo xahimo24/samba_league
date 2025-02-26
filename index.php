@@ -42,7 +42,7 @@
                     </li>
                 </ul>
             </div>
-            <button class="header-btn">Login</button>
+            <button class="header-btn">Cuenta</button>
             <!-- Ventana emergente (modal) para login -->
             <div id="loginModal" class="modal">
                 <div class="modal-content-login">
@@ -60,16 +60,41 @@
                                                 <h4 class="heading">Log In</h4>
                                                 <form method="POST" action="login.php">
                                                     <div class="form-group">
-                                                        <input type="text" id="username" name="username" placeholder="Enter your username" required /><br /><br />
+                                                        <input type="text" id="username" name="username" placeholder="Usuario" required class="form-style"/><br /><br />
                                                         <i class="input-icon material-icons">alternate_email</i>
                                                     </div>
-                                                    
-                                                    <label for="password">Password:</label>
-                                                    <input type="password" id="password" name="password" placeholder="Enter your password" required /><br /><br />
+                                                    <div class="form-group">
+                                                        <input type="password" id="password" name="password" placeholder="Contraseña" required class="form-style" />
+                                                        <i class="input-icon material-icons">lock</i>
+                                                    </div>
                                                     <button type="submit">Submit</button>
                                                 </form>
                                             </div>
                                         </div>
+                                        <div class="card-back">
+                                <div class="center-wrap">
+                                    <h4 class="heading">Sign Up</h4>
+                                    <form method="POST" action="signup.php">
+                                        <div class="form-group">
+                                            <input type="text" id="name" name="name" placeholder="Nombre" required class="form-style" />
+                                            <i class="input-icon material-icons">perm_identity</i>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" id="email" name="email" placeholder="Email" required class="form-style" />
+                                            <i class="input-icon material-icons">alternate_email</i>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" id="password" name="password" placeholder="Contraseña" required class="form-style" />
+                                            <i class="input-icon material-icons">lock</i>
+                                        </div>
+                                        <button type="submit" class="btn">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </header>
@@ -108,7 +133,7 @@
             </div>
             <!-- Ventana emergente (modal) para incorporarse -->
             <div id="incorporateModal" class="modal">
-                <div class="modal-content">
+                <div class="modal-content-incorporate">
                     <span class="close">&times;</span>
                     <h2>Incorporarse</h2>
                     <p>Para incorporarse a la liga hay dos factores en juego:</p><br>

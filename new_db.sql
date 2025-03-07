@@ -300,7 +300,7 @@ INSERT INTO Partidos (fecha, jornada, id_equipo_local, id_equipo_visitante, gole
 ('2024-11-16', 8, 15, 16, 6, 5, 'partido-samba', 'Highlands School'),
 ('2024-11-24', 9, 17, 18, 5, 9, 'partido-samba', 'Futbol Sala Valldaura'),
 ('2024-11-30', 10, 19, 20, 3, 8, 'partido-samba', 'Highlands School'),
-('2024-12-07', 11, 21, 22, 9, 8, 'partido-samba', 'Scala Dei'),
+('2024-12-07', 11, 21, 22, 9, 8, 'partido-samba', 'Clic Sports Scala Dei'),
 ('2024-12-21', 12, 23, 24, 8, 5, 'partido-samba', 'Highlands School');
 
 CREATE TABLE Eventos (

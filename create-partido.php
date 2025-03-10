@@ -31,8 +31,9 @@ if ($result->num_rows > 0) {
 
         // Insertar eventos del partido
         foreach ($events as $event) {
+            $minute = $event['minute'] ? $event['minute'] : 'NULL';
             $sql = "INSERT INTO Eventos (id_partido, minuto, tipo_evento, id_jugador_principal, id_jugador_secundario) 
-                    VALUES ($partido_id, {$event['minute']}, {$event['type']}, {$event['playerMainId']}, {$event['playerSecondaryId']})";
+                    VALUES ($partido_id, $minute, {$event['type']}, {$event['playerMainId']}, {$event['playerSecondaryId']})";
             $conn->query($sql);
         }
 

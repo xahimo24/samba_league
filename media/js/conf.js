@@ -66,6 +66,15 @@ function addTeamPlayer() {
     listItem.textContent = `${playerName} (${color})`;
     listItem.dataset.playerId = playerId;
     listItem.dataset.color = color;
+
+    const removeButton = document.createElement("button");
+    removeButton.innerHTML = "🗑️";
+    removeButton.className = "remove-player-button";
+    removeButton.onclick = function() {
+      removeTeamPlayer(listItem, playerId, playerName);
+    };
+
+    listItem.appendChild(removeButton);
     document.getElementById("team_players_list").appendChild(listItem);
 
     // Remove the selected player from the dropdown
@@ -74,6 +83,37 @@ function addTeamPlayer() {
     // Add the player to the event player options
     addEventPlayerOption(playerId, playerName);
   }
+}
+
+function removeTeamPlayer(listItem, playerId, playerName) {
+  listItem.remove();
+
+  // Add the player back to the dropdown
+  const playerSelect = document.getElementById("team_player");
+  const option = document.createElement("option");
+  option.value = playerId;
+  option.textContent = playerName;
+  playerSelect.appendChild(option);
+
+  // Remove the player from the event player options
+  removeEventPlayerOption(playerId);
+}
+
+function removeEventPlayerOption(playerId) {
+  const eventPlayerMainSelect = document.getElementById("event_player_main");
+  const eventPlayerSecondarySelect = document.getElementById("event_player_secondary");
+
+  [...eventPlayerMainSelect.options].forEach(option => {
+    if (option.value == playerId) {
+      option.remove();
+    }
+  });
+
+  [...eventPlayerSecondarySelect.options].forEach(option => {
+    if (option.value == playerId) {
+      option.remove();
+    }
+  });
 }
 
 function resetPlayerOptions() {

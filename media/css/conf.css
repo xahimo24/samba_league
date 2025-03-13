@@ -365,6 +365,23 @@ button:hover {
     background-color: #4CAF50;
 }
 
+/* Estilo para el botón de eliminar jugador */
+.remove-player-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.remove-player-button:hover {
+    color: #cc0000;
+}
+
 .modal-content .close {
     color: #aaa;
     float: right;

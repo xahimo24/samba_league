@@ -160,44 +160,37 @@ function addEvent() {
   const minute = document.getElementById("event_minute").value;
   const type = document.getElementById("event_type").value;
   const playerMainId = document.getElementById("event_player_main").value;
-  const playerSecondaryId = document.getElementById(
-    "event_player_secondary"
-  ).value;
-  const playerMainName =
-    document.getElementById("event_player_main").options[
-      document.getElementById("event_player_main").selectedIndex
-    ].text;
-  const playerSecondaryName = document.getElementById("event_player_secondary")
-    .options[document.getElementById("event_player_secondary").selectedIndex]
-    .text;
+  const playerSecondaryId = document.getElementById("event_player_secondary").value;
+  const playerMainName = document.getElementById("event_player_main").options[document.getElementById("event_player_main").selectedIndex].text;
+  const playerSecondaryName = document.getElementById("event_player_secondary").options[document.getElementById("event_player_secondary").selectedIndex].text;
 
-  const resultadoLocal =
-    parseInt(document.getElementById("resultado_local").value) || 0;
-  const resultadoVisitante =
-    parseInt(document.getElementById("resultado_visitante").value) || 0;
+  const resultadoLocal = parseInt(document.getElementById("resultado_local").value) || 0;
+  const resultadoVisitante = parseInt(document.getElementById("resultado_visitante").value) || 0;
   const totalGoles = resultadoLocal + resultadoVisitante;
-  const currentGoles = document.querySelectorAll(
-    '#events_list li[data-type="gol"]'
-  ).length;
+  const currentGoles = document.querySelectorAll('#events_list li[data-type="gol"]').length;
 
   if (type && playerMainId) {
     if (type.toLowerCase() === "gol" && currentGoles >= totalGoles) {
-      alert(
-        "El número de goles en los eventos no puede exceder el resultado total del partido."
-      );
+      alert("El número de goles en los eventos no puede exceder el resultado total del partido.");
       return;
     }
 
     const listItem = document.createElement("li");
-    listItem.textContent = `Minuto ${
-      minute || "N/A"
-    }: ${type} - ${playerMainName} ${
-      playerSecondaryId ? `asistencia de ${playerSecondaryName}` : ""
-    }`;
+    const minuteText = minute && minute != 0 ? `Minuto ${minute}: ` : "";
+    listItem.textContent = `${minuteText}${type} - ${playerMainName} ${playerSecondaryId ? `asistencia de ${playerSecondaryName}` : ""}`;
     listItem.dataset.minute = minute || "N/A";
     listItem.dataset.type = type;
     listItem.dataset.playerMainId = playerMainId;
     listItem.dataset.playerSecondaryId = playerSecondaryId;
+
+    const removeButton = document.createElement("button");
+    removeButton.innerHTML = "🗑️";
+    removeButton.className = "remove-event-button";
+    removeButton.onclick = function() {
+      listItem.remove();
+    };
+
+    listItem.appendChild(removeButton);
     document.getElementById("events_list").appendChild(listItem);
   }
 }
@@ -227,8 +220,7 @@ function loadMatchData() {
       document.getElementById("edit_fecha").value = match.fecha;
       document.getElementById("edit_jornada").value = match.jornada;
       document.getElementById("edit_resultado_local").value = match.goles_local;
-      document.getElementById("edit_resultado_visitante").value =
-        match.goles_visitante;
+      document.getElementById("edit_resultado_visitante").value = match.goles_visitante;
 
       // Load team players
       const teamPlayersList = document.getElementById("edit_team_players_list");
@@ -238,6 +230,15 @@ function loadMatchData() {
         listItem.textContent = `${player.nombre} (${player.color})`;
         listItem.dataset.playerId = player.id;
         listItem.dataset.color = player.color;
+
+        const removeButton = document.createElement("button");
+        removeButton.innerHTML = "🗑️";
+        removeButton.className = "remove-player-button";
+        removeButton.onclick = function() {
+          removeTeamPlayer(listItem, player.id, player.nombre);
+        };
+
+        listItem.appendChild(removeButton);
         teamPlayersList.appendChild(listItem);
       });
 
@@ -246,17 +247,21 @@ function loadMatchData() {
       eventsList.innerHTML = "";
       match.events.forEach((event) => {
         const listItem = document.createElement("li");
-        listItem.textContent = `Minuto ${event.minuto}: ${
-          event.tipo_evento
-        } - ${event.jugador_principal} ${
-          event.id_jugador_secundario
-            ? `asistencia de ${event.jugador_secundario}`
-            : ""
-        }`;
-        listItem.dataset.minute = event.minuto;
+        const minuteText = event.minuto && event.minuto != 0 ? `Minuto ${event.minuto}: ` : "";
+        listItem.textContent = `${minuteText}${event.tipo_evento} - ${event.jugador_principal} ${event.id_jugador_secundario ? `asistencia de ${event.jugador_secundario}` : ""}`;
+        listItem.dataset.minute = event.minuto || "N/A";
         listItem.dataset.type = event.tipo_evento;
         listItem.dataset.playerMainId = event.id_jugador_principal;
         listItem.dataset.playerSecondaryId = event.id_jugador_secundario;
+
+        const removeButton = document.createElement("button");
+        removeButton.innerHTML = "🗑️";
+        removeButton.className = "remove-event-button";
+        removeButton.onclick = function() {
+          listItem.remove();
+        };
+
+        listItem.appendChild(removeButton);
         eventsList.appendChild(listItem);
       });
     }

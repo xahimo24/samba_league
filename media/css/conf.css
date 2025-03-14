@@ -344,7 +344,6 @@ button:hover {
     transition: background-color 0.3s ease;
 }
 
-
 .modal-content select option:hover {
     background-color: #4CAF50;
 }
@@ -365,21 +364,57 @@ button:hover {
     background-color: #4CAF50;
 }
 
+
 /* Estilo para el botón de eliminar jugador */
-.remove-player-button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 20px;
-    background-color: #ff0000;
-    color: white;
+.modal-content #team_players_list .remove-player-button,
+.modal-content #edit_team_players_list .remove-player-button {
+    background-color: transparent; /* Asegura que el fondo sea transparente */
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    color: #ff0000;
+    font-size: 1.2rem;
+    margin-top: 0px;
+    transition: color 0.3s ease;
+    width: 40px;
 }
 
-.remove-player-button:hover {
-    color: #cc0000;
+.modal-content #team_players_list .remove-player-button:hover,
+.modal-content #edit_team_players_list .remove-player-button:hover {
+    background-color: #535353;
+}
+
+/* Estilo para el contenedor del jugador */
+#team_players_list li,
+#edit_team_players_list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Estilo para el botón de eliminar evento */
+.modal-content #events_list .remove-event-button,
+.modal-content #edit_events_list .remove-event-button {
+    background-color: transparent; /* Asegura que el fondo sea transparente */
+    border: none;
+    cursor: pointer;
+    color: #ff0000;
+    font-size: 1.2rem;
+    margin-top: 0px;
+    transition: color 0.3s ease;
+    width: 40px;
+}
+
+.modal-content #events_list .remove-event-button:hover,
+.modal-content #edit_events_list .remove-event-button:hover {
+    background-color: #535353;
+}
+
+/* Estilo para el contenedor del evento */
+#events_list li,
+#edit_events_list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .modal-content .close {
@@ -400,4 +435,107 @@ button:hover {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+}
+
+/* Estilos para el tareas pendientes */
+.task-columns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.task-column {
+    flex: 1;
+    margin: 0 10px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.task-column h3 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.taskList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.taskList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.taskList li:last-child {
+    border-bottom: none;
+}
+
+.taskList li button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.taskList li button:hover {
+    background-color: #ff1a1a;
+}
+
+.taskList li .move-button {
+    background-color: #82BC6A;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.taskList li .move-button:hover {
+    background-color: #4CAF50;
+}
+
+#taskForm {
+    display: flex;
+    margin-top: 20px;
+}
+
+#taskForm input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#taskForm button {
+    padding: 10px 20px;
+    background-color: #82BC6A;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+#taskForm button:hover {
+    background-color: #4CAF50;
 }

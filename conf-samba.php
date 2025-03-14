@@ -1,91 +1,91 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
-    exit();
-}
-include 'db_connection.php';
+    session_start();
+    if (! isset($_SESSION['user_id'])) {
+        header("Location: index.php");
+        exit();
+    }
+    include 'db_connection.php';
 
-// Obtener la información de los jugadores con estadísticas
-$sql = "SELECT j.id, j.nombre, j.posicion, j.dorsal, 
-               e.partidos_jugados, e.victorias, e.derrotas, e.goles, e.asistencias, e.paradas, e.defensa AS stats_defensivas, 
-               ROUND((e.victorias / NULLIF(e.partidos_jugados, 0)) * 100, 2) AS win_rate, 
+    // Obtener la información de los jugadores con estadísticas
+    $sql = "SELECT j.id, j.nombre, j.posicion, j.dorsal,
+               e.partidos_jugados, e.victorias, e.derrotas, e.goles, e.asistencias, e.paradas, e.defensa AS stats_defensivas,
+               ROUND((e.victorias / NULLIF(e.partidos_jugados, 0)) * 100, 2) AS win_rate,
                e.puntos AS suma_puntos
         FROM Jugadores j
         LEFT JOIN Estadisticas e ON j.id = e.id_jugador"; // Unir con la tabla Estadisticas
-$result = $conn->query($sql);
-$jugadores = [];
+    $result    = $conn->query($sql);
+    $jugadores = [];
 
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        // Calcular el overall si es necesario
-        $partidos_jugados = $row['partidos_jugados'] ?? 0;
-        $suma_puntos = $row['suma_puntos'] ?? 0;
-        $overall = ($partidos_jugados > 0) ? round($suma_puntos / $partidos_jugados, 2) : 0.0;
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            // Calcular el overall si es necesario
+            $partidos_jugados = $row['partidos_jugados'] ?? 0;
+            $suma_puntos      = $row['suma_puntos'] ?? 0;
+            $overall          = ($partidos_jugados > 0) ? round($suma_puntos / $partidos_jugados, 2) : 0.0;
 
-        // Agregar el overall al array de datos del jugador
-        $row['overall'] = $overall;
+            // Agregar el overall al array de datos del jugador
+            $row['overall'] = $overall;
 
-        // Almacenar los datos del jugador
-        $jugadores[] = $row;
+            // Almacenar los datos del jugador
+            $jugadores[] = $row;
+        }
+    } else {
+        echo "No se encontraron jugadores.";
     }
-} else {
-    echo "No se encontraron jugadores.";
-}
 
-// Obtener la información de los partidos
-$sql = "SELECT p.id, p.fecha, p.jornada, 
-               p.id_equipo_local, 
-               p.id_equipo_visitante, 
-               e1.color AS equipo_local, 
-               e2.color AS equipo_visitante, 
+    // Obtener la información de los partidos
+    $sql = "SELECT p.id, p.fecha, p.jornada,
+               p.id_equipo_local,
+               p.id_equipo_visitante,
+               e1.color AS equipo_local,
+               e2.color AS equipo_visitante,
                p.goles_local, p.goles_visitante, p.tipo, p.estadio
         FROM Partidos p
         INNER JOIN Equipos e1 ON p.id_equipo_local = e1.id
         INNER JOIN Equipos e2 ON p.id_equipo_visitante = e2.id";
-$result = $conn->query($sql);
-$partidos = [];
+    $result   = $conn->query($sql);
+    $partidos = [];
 
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        // Obtener jugadores del partido
-        $sql_players = "SELECT j.id, j.nombre, e.color
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            // Obtener jugadores del partido
+            $sql_players = "SELECT j.id, j.nombre, e.color
                         FROM Jugadores j
                         INNER JOIN Plantilla pj ON j.id = pj.id_jugador
                         INNER JOIN Equipos e ON pj.id_equipo = e.id
                         WHERE pj.id_equipo = " . $row['id_equipo_local'] . " OR pj.id_equipo = " . $row['id_equipo_visitante'];
-        $result_players = $conn->query($sql_players);
-        $players = [];
-        if ($result_players->num_rows > 0) {
-            while ($player = $result_players->fetch_assoc()) {
-                $players[] = $player;
+            $result_players = $conn->query($sql_players);
+            $players        = [];
+            if ($result_players->num_rows > 0) {
+                while ($player = $result_players->fetch_assoc()) {
+                    $players[] = $player;
+                }
             }
-        }
 
-        // Obtener eventos del partido
-        $sql_events = "SELECT e.minuto, e.tipo_evento, e.id_jugador_principal, e.id_jugador_secundario, 
+            // Obtener eventos del partido
+            $sql_events = "SELECT e.minuto, e.tipo_evento, e.id_jugador_principal, e.id_jugador_secundario,
                               jp.nombre AS jugador_principal, js.nombre AS jugador_secundario
                        FROM Eventos e
                        LEFT JOIN Jugadores jp ON e.id_jugador_principal = jp.id
                        LEFT JOIN Jugadores js ON e.id_jugador_secundario = js.id
                        WHERE e.id_partido = " . $row['id'];
-        $result_events = $conn->query($sql_events);
-        $events = [];
-        if ($result_events->num_rows > 0) {
-            while ($event = $result_events->fetch_assoc()) {
-                $events[] = $event;
+            $result_events = $conn->query($sql_events);
+            $events        = [];
+            if ($result_events->num_rows > 0) {
+                while ($event = $result_events->fetch_assoc()) {
+                    $events[] = $event;
+                }
             }
+
+            $row['teamPlayers'] = $players;
+            $row['events']      = $events;
+            $partidos[]         = $row;
         }
-
-        $row['teamPlayers'] = $players;
-        $row['events'] = $events;
-        $partidos[] = $row;
+    } else {
+        echo "No se encontraron partidos.";
     }
-} else {
-    echo "No se encontraron partidos.";
-}
 
-$conn->close();
+    $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -129,6 +129,29 @@ $conn->close();
             <h1>Bienvenido Equipo Directivo</h1>
             <br>
             <h2>Esta es la página de configuración de Samba League.</h2>
+        </div>
+    </section>
+    <section class="tareas" id="pendientes">
+        <div class="container">
+            <h2>Tareas Pendientes</h2>
+            <form id="taskForm">
+                <input type="text" id="newTask" placeholder="Nueva tarea" required>
+                <button type="submit">Añadir Tarea</button>
+            </form>
+            <div class="task-columns">
+                <div class="task-column">
+                    <h3>Pendientes</h3>
+                    <ul id="pendingTasks" class="taskList"></ul>
+                </div>
+                <div class="task-column">
+                    <h3>En Proceso</h3>
+                    <ul id="inProgressTasks" class="taskList"></ul>
+                </div>
+                <div class="task-column">
+                    <h3>Realizado</h3>
+                    <ul id="completedTasks" class="taskList"></ul>
+                </div>
+            </div>
         </div>
     </section>
     <section class="partidos" id="partidos">
@@ -204,7 +227,7 @@ $conn->close();
                         <br>
                         <label for="event_player_secondary">Jugador Secundario:</label>
                         <select id="event_player_secondary" name="event_player_secondary">
-                            <option value="NULL">Ninguno</option>
+                            <option value="NULL">Nadie</option>
                         </select>
                         <br>
                         <button type="button" onclick="addEvent()">Añadir Evento</button>
@@ -216,39 +239,65 @@ $conn->close();
             </div>
             <!-- Formulario para editar un partido existente -->
             <div id="editMatchModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeEditMatchModal()">&times;</span>
-        <h2>Editar Partido</h2>
-        <label for="select_jornada">Seleccionar Jornada:</label>
-        <select id="select_jornada" onchange="loadMatchData()">
-            <option value="">Seleccionar Jornada</option>
-            <?php foreach ($partidos as $partido): ?>
-                <option value="<?php echo $partido['id']; ?>">Jornada <?php echo $partido['jornada']; ?></option>
-            <?php endforeach; ?>
-        </select>
-        <form id="editMatchForm" method="POST" action="update-partido.php">
-            <input type="hidden" id="edit_partido_id" name="partido_id">
-            <label for="edit_fecha">Fecha:</label>
-            <input type="date" id="edit_fecha" name="fecha" required>
-            <label for="edit_jornada">Jornada:</label>
-            <input type="number" id="edit_jornada" name="jornada" disabled>
-            <label for="edit_resultado_local">Resultado Local:</label>
-            <input type="number" id="edit_resultado_local" name="resultado_local" required>
-            <label for="edit_resultado_visitante">Resultado Visitante:</label>
-            <input type="number" id="edit_resultado_visitante" name="resultado_visitante" required>
-            
-            <h3>Jugadores</h3>
-            <ul id="edit_team_players_list"></ul>
-            <button type="button" onclick="addTeamPlayer()">Añadir Jugador</button>
-            
-            <h3>Eventos</h3>
-            <ul id="edit_events_list"></ul>
-            <button type="button" onclick="addEvent()">Añadir Evento</button>
-            
-            <button type="submit">Guardar Cambios</button>
-        </form>
-    </div>
-</div>
+                <div class="modal-content">
+                    <span class="close" onclick="closeEditMatchModal()">&times;</span>
+                    <h2>Editar Partido</h2>
+                    <label for="select_jornada">Seleccionar Jornada:</label>
+                    <select id="select_jornada" onchange="loadMatchData()">
+                        <option value="">Seleccionar Jornada</option>
+                            <?php foreach ($partidos as $partido): ?>
+                        <option value="<?php echo $partido['id']; ?>">Jornada<?php echo $partido['jornada']; ?></option>
+                            <?php endforeach; ?>
+                    </select>
+                    <form id="editMatchForm" method="POST" action="update-partido.php">
+                        <input type="hidden" id="edit_partido_id" name="partido_id">
+                        <label for="edit_fecha">Fecha:</label>
+                        <input type="date" id="edit_fecha" name="fecha" required>
+                        <label for="edit_jornada">Jornada:</label>
+                        <input type="number" id="edit_jornada" name="jornada" disabled>
+                        <label for="edit_resultado_local">Resultado Local:</label>
+                        <input type="number" id="edit_resultado_local" name="resultado_local" required>
+                        <label for="edit_resultado_visitante">Resultado Visitante:</label>
+                        <input type="number" id="edit_resultado_visitante" name="resultado_visitante" required>
+                        <h3>Jugadores:</h3>
+                        <ul id="edit_team_players_list"></ul>
+                        <button type="button" onclick="addTeamPlayer()">Añadir Jugador</button>
+                        <h3>Eventos:</h3>
+                        <ul id="edit_events_list"></ul>
+                        <button type="button" onclick="addEvent()">Añadir Evento</button>
+                        <button type="submit">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>       
+    </section>
+    <section class="valoraciones" id="valoraciones">
+        <div class="container">
+            <h2>Valoraciones</h2>
+            <button onclick="openCreateRatingModal()">Crear Valoración</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Jugador</th>
+                        <th>Partido</th>
+                        <th>Nota</th>
+                        <th>Comentario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nombre Jugador</td>
+                        <td>Partido</td>
+                        <td>Nota</td>
+                        <td>Comentario</td>
+                        <td>
+                            <button>Editar</button>
+                            <button>Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </section>
     <section class="jugadores" id="jugadores">
@@ -379,10 +428,11 @@ $conn->close();
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="media/js/conf.js"></script>
+    <script src="media/js/matches_players.js"></script>
+    <script src="media/js/tasks.js"></script>
     <script>
-        const jugadores = <?php echo json_encode($jugadores); ?>;
-        const partidos = <?php echo json_encode($partidos); ?>;
+        const jugadores =                          <?php echo json_encode($jugadores); ?>;
+        const partidos =                         <?php echo json_encode($partidos); ?>;
     </script>
 </body>
 

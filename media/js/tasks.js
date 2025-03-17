@@ -5,9 +5,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const inProgressTasks = document.getElementById('inProgressTasks');
     const completedTasks = document.getElementById('completedTasks');
 
+    // Load tasks from the server
+    loadTasks();
+
     taskForm.addEventListener('submit', function(event) {
         event.preventDefault();
-        addTask(newTaskInput.value, 'pending');
+        const taskText = newTaskInput.value;
+        addTask(taskText, 'pending');
+        saveTask(taskText, 'pending');
         newTaskInput.value = '';
     });
 
@@ -20,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         deleteButton.textContent = 'Eliminar';
         deleteButton.addEventListener('click', function() {
             li.parentElement.removeChild(li);
+            deleteTask(task);
         });
 
         li.textContent = ''; // Clear the text content before appending buttons
@@ -56,5 +62,46 @@ document.addEventListener('DOMContentLoaded', function() {
         const taskText = taskElement.getAttribute('data-task'); // Get the task text from the data attribute
         taskElement.parentElement.removeChild(taskElement);
         addTask(taskText, newStatus);
+        updateTaskStatus(taskText, newStatus);
+    }
+
+    function loadTasks() {
+        fetch('load_tasks.php')
+            .then(response => response.json())
+            .then(tasks => {
+                tasks.forEach(task => {
+                    addTask(task.task, task.status);
+                });
+            });
+    }
+
+    function saveTask(task, status) {
+        fetch('save_task.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ task, status })
+        });
+    }
+
+    function updateTaskStatus(task, status) {
+        fetch('update_task.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ task, status })
+        });
+    }
+
+    function deleteTask(task) {
+        fetch('delete_task.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ task })
+        });
     }
 });

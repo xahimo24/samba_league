@@ -557,3 +557,10 @@ CREATE TABLE usuarios (
 
 INSERT INTO usuarios (id, username, password, email, created_at) VALUES
 (1, 'romario', '$2y$10$NVFhHl83vsLgzOAF7d1bm.PboVGo0tSrChWXS8H/GY2Vu7aw/buja', 'adminsambaleague@gmail.com', '2025-01-27 18:48:25');
+
+
+CREATE TABLE tasks (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    task VARCHAR(255) NOT NULL,
+    status ENUM('pending', 'InProgress', 'Completed') NOT NULL DEFAULT 'pending'
+);

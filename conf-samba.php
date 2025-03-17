@@ -119,12 +119,12 @@
                 <li><a href="#pendientes">TAREAS PENDIENTES</a></li>
             </ul>
             <ul>
-                <li><a href="conf-samba.php">Inicio</a></li>
+                <li><a href="#home">Inicio</a></li>
                 <li><a href="logout.php">Cerrar sesión</a></li>
             </ul>
         </nav>
     </header>
-    <section class="introduction">
+    <section class="introduction" id="home">
         <div class="container">
             <h1>Bienvenido Equipo Directivo</h1>
             <br>

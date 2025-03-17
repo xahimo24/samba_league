@@ -379,7 +379,6 @@
         </div>
     </div>
 </section>
-
 <footer class="footer-section" style="background-image: url(media/img/footer-bg.jpg);">
     <div class="container">
         <div class="row">

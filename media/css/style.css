@@ -346,7 +346,7 @@ section {
 .text-center { text-align: center; }
 
 .right { flex: 0 0 50%; flex-direction: column;    align-items: center;
-    justify-content: center;max-width: 100%; padding: 20px; }
+    justify-content: center;max-width: 100%; padding: 20px; display: flex; }
 
 form {width: 100%; display: flex; justify-content: center; }
 .right h4 { font-weight: 600; color: var(--white); }
@@ -428,7 +428,7 @@ input[type="checkbox"] { display: none; }
     transform-style: preserve-3d;
 }
 
-    .card-back { transform: rotateY(180deg); }
+.card-back { transform: rotateY(180deg); display: none;  display: flex; align-items: center; justify-content: center; }
 
 .center-wrap {
     position: absolute;
@@ -811,6 +811,9 @@ button[type="submit"]:hover {
     transform: rotateY(180deg);
     display: none; /* Initially hidden */
     background-color: #f0f0f0;
+    display: flex; /* Añadir esta línea */
+    align-items: center; /* Añadir esta línea */
+    justify-content: center; /* Añadir esta línea */
 }
 .jugador-back p {
     color: #000;

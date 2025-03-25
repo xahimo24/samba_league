@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function loadTasks() {
-        fetch('load_tasks.php')
+        fetch('./load_tasks.php')
             .then(response => response.json())
             .then(tasks => {
                 tasks.forEach(task => {
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function saveTask(task, status) {
-        fetch('save_task.php', {
+        fetch('./save_task.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateTaskStatus(task, status) {
-        fetch('update_task.php', {
+        fetch('./update_task.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function deleteTask(task) {
-        fetch('delete_task.php', {
+        fetch('./delete_task.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

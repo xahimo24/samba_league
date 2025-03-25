@@ -12,14 +12,13 @@ $fecha = $_POST['fecha'];
 $jornada = $_POST['jornada'];
 $goles_local = $_POST['resultado_local'];
 $goles_visitante = $_POST['resultado_visitante'];
-$comentarios = $_POST['comentarios'];
 
 // Actualizar el partido en la tabla Partidos
 $sql = "UPDATE Partidos 
-        SET fecha = ?, jornada = ?, goles_local = ?, goles_visitante = ?, comentarios = ? 
+        SET fecha = ?, goles_local = ?, goles_visitante = ? 
         WHERE id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("siiisi", $fecha, $jornada, $goles_local, $goles_visitante, $comentarios, $partido_id);
+$stmt->bind_param("siii", $fecha, $goles_local, $goles_visitante, $partido_id);
 $stmt->execute();
 
 // Eliminar eventos antiguos del partido

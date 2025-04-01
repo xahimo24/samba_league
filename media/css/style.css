@@ -305,6 +305,7 @@ section {
 
 .header-btn:hover{
     cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Estilos para el modal */
@@ -534,6 +535,14 @@ input[type="checkbox"] { display: none; }
     margin-bottom: 20px;
 }
 
+.modal-content-incorporate li {
+    margin-bottom: 5px;
+}
+
+.modal-content-rules li{
+    margin-bottom: 10px;
+}
+
 /* Estilo para el botón de cierre (X) */
 .close {
     color: #aaa;
@@ -654,6 +663,14 @@ button[type="submit"]:hover {
     text-align: left;
 }
 
+.aboutus-content p {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 150%;
+    /* 30px */
+    letter-spacing: 0.2px;
+}
+
 .aboutus-image {
     flex: 1;
     text-align: right; /* Opcional, para centrar o alinear la imagen */
@@ -690,11 +707,10 @@ button[type="submit"]:hover {
 
 .incorporate:hover{
     cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.camiseta a{
-    text-decoration: underline;
-}
+
 
 .info{
     font-size: 18px; /* Tamaño de la fuente un poco más grande */
@@ -702,7 +718,7 @@ button[type="submit"]:hover {
     background-color: #f9f9f9; /* Color de fondo más claro */
     padding: 15px; /* Más espacio interior */
     border-left: 5px solid #3E6D1E; /* Borde izquierdo color azul */
-    margin-bottom: 15px; /* Espacio inferior */
+    margin: 25px 0; /* Espacio inferior */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
@@ -725,6 +741,7 @@ button[type="submit"]:hover {
 
 .rules:hover{
     cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .modal-content p{

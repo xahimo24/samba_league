@@ -198,7 +198,7 @@ header.sticky {
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 10px 0;
+    padding: 20px 0;
     background: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

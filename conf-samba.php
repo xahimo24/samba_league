@@ -113,10 +113,9 @@
                 </a>
             </div>
             <ul>
+                <li><a href="#pendientes">TAREAS PENDIENTES</a></li>
                 <li><a href="#partidos">PARTIDOS</a></li>
                 <li><a href="#jugadores">JUGADORES</a></li>
-                <li><a href="#valoraciones">VALORACIONES</a></li>
-                <li><a href="#pendientes">TAREAS PENDIENTES</a></li>
             </ul>
             <ul>
                 <li><a href="#home">Inicio</a></li>
@@ -270,35 +269,6 @@
                 </div>
             </div>
         </div>       
-    </section>
-    <section class="valoraciones" id="valoraciones">
-        <div class="container">
-            <h2>Valoraciones</h2>
-            <button onclick="openCreateRatingModal()">Crear Valoración</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Jugador</th>
-                        <th>Partido</th>
-                        <th>Nota</th>
-                        <th>Comentario</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Nombre Jugador</td>
-                        <td>Partido</td>
-                        <td>Nota</td>
-                        <td>Comentario</td>
-                        <td>
-                            <button>Editar</button>
-                            <button>Eliminar</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
     </section>
     <section class="jugadores" id="jugadores">
         <div class="container">

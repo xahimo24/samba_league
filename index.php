@@ -189,9 +189,6 @@
                             <li>Paradas: <?php echo $jugador['paradas']; ?></li>
                             <li>Stats Defensivas: <?php echo $jugador['stats_defensivas']; ?></li>
                             <li>Win Rate: <?php echo $jugador['win_rate']; ?></li>
-                            <li>Suma de Puntos: <?php echo $jugador['suma_puntos']; ?></li>
-                            <li>Overall: <?php echo $jugador['overall']; ?></li>
-                        </ul>
                     </div>
                     <div class="jugador-back-2">
                         <p>Estadísticas físicas de <?php echo $jugador['nombre']; ?></p>

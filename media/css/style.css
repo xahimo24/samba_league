@@ -1074,6 +1074,11 @@ button[type="submit"]:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
+.match-item:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+}
+
 .match-item.expanded {
     background-size: cover;
     background-position: center;
